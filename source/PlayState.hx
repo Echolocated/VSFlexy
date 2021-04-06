@@ -147,6 +147,10 @@ class PlayState extends MusicBeatState
 	var santa:FlxSprite;
 	var bopFellas:FlxSprite;
 	var bopIt:FlxSprite;
+	var bluFW:FlxSprite;
+	var ylwFW:FlxSprite;
+	var grnFW:FlxSprite;
+	var pnkFW:FlxSprite;
 
 	var fc:Bool = true;
 
@@ -604,9 +608,9 @@ class PlayState extends MusicBeatState
 				add(waveSprite);
 				add(waveSpriteFG);
 			 */
-			
+
 		case 'noche' | 'desierto':
-		
+
 			defaultCamZoom = 0.65;
 			curStage = 'fiesta';
 
@@ -667,6 +671,79 @@ class PlayState extends MusicBeatState
 			bg.active = false;
 			add(bg);
 
+			bluFW = new FlxSprite();
+			bluFW.frames = Paths.getSparrowAtlas('rooftop/fireworks/blueFirework');
+			bluFW.screenCenter(XY);
+			bluFW.y += 250;
+			bluFW.antialiasing=true;
+			bluFW.scrollFactor.set(.8,.8);
+			bluFW.setGraphicSize(Std.int(bluFW.width*1.1) ) ;
+			bluFW.animation.addByPrefix("explode","blue",24,false);
+			bluFW.animation.finishCallback=function(n:String):Void{
+				bluFW.visible=false;
+			}
+			bluFW.updateHitbox();
+			add(bluFW);
+
+
+			grnFW = new FlxSprite();
+			grnFW.frames = Paths.getSparrowAtlas('rooftop/fireworks/greenFirework');
+			grnFW.screenCenter(XY);
+			grnFW.y -= 25;
+			grnFW.x += 300;
+			grnFW.antialiasing=true;
+			grnFW.scrollFactor.set(.8,.8);
+			grnFW.setGraphicSize(Std.int(grnFW.width*1.1) ) ;
+			grnFW.animation.addByPrefix("explode","yellow",24,false);
+			grnFW.animation.finishCallback=function(n:String):Void{
+				grnFW.visible=false;
+			}
+			grnFW.updateHitbox();
+			add(grnFW);
+
+			pnkFW = new FlxSprite();
+			pnkFW.frames = Paths.getSparrowAtlas('rooftop/fireworks/pinkFirework');
+			pnkFW.screenCenter(XY);
+			pnkFW.y -= 200;
+			pnkFW.x += 600;
+			pnkFW.antialiasing=true;
+			pnkFW.scrollFactor.set(.8,.8);
+			pnkFW.setGraphicSize(Std.int(pnkFW.width*1.3) ) ;
+			pnkFW.animation.addByPrefix("explode","pink",24,false);
+			pnkFW.animation.finishCallback=function(n:String):Void{
+				pnkFW.visible=false;
+			}
+			pnkFW.updateHitbox();
+			add(pnkFW);
+
+			bluFW = new FlxSprite();
+			bluFW.frames = Paths.getSparrowAtlas('rooftop/fireworks/blueFirework');
+			bluFW.screenCenter(XY);
+			bluFW.y += 250;
+			bluFW.antialiasing=true;
+			bluFW.scrollFactor.set(.8,.8);
+			bluFW.setGraphicSize(Std.int(bluFW.width*1.1) ) ;
+			bluFW.animation.addByPrefix("explode","blue",24,false);
+			bluFW.animation.finishCallback=function(n:String):Void{
+				bluFW.visible=false;
+			}
+			bluFW.updateHitbox();
+			add(bluFW);
+
+			ylwFW = new FlxSprite();
+			ylwFW.frames = Paths.getSparrowAtlas('rooftop/fireworks/yellowFirework');
+			ylwFW.screenCenter(XY);
+			ylwFW.y -= 100;
+			ylwFW.antialiasing=true;
+			ylwFW.scrollFactor.set(.8,.8);
+			ylwFW.setGraphicSize(Std.int(ylwFW.width*.9) ) ;
+			ylwFW.animation.addByPrefix("explode","green",24,false);
+			ylwFW.animation.finishCallback=function(n:String):Void{
+				ylwFW.visible=false;
+			}
+			ylwFW.updateHitbox();
+			add(ylwFW);
+
 			var behind:FlxSprite = new FlxSprite(0, -300).loadGraphic(Paths.image('rooftop/behind'));
 			behind.screenCenter(XY);
 			behind.antialiasing = true;
@@ -694,7 +771,7 @@ class PlayState extends MusicBeatState
 			wall.active = false;
 			wall.setGraphicSize (Std.int(wall.width * 1.3));
 			wall.x -= 490;
-			wall.y += 75;
+			wall.y += 50;
 			add(wall);
 
 			var fg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('rooftop/fg'));
@@ -2265,6 +2342,10 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
 		#end
+		#if debug
+		if (FlxG.keys.justPressed.TWO && curStage == "rooftop")
+			theFireWorks();
+		#end
 	}
 
 	public function skip(): Void
@@ -3273,6 +3354,40 @@ class PlayState extends MusicBeatState
 
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
+	var nextFirework:Int = 4;
+	var fireworking:Bool = false;
+	var fireworkTimer:Int = 0;
+
+	function theFireWorks(){
+			fireworking=true;
+			var fireworks:Array<FlxSprite> = [
+				ylwFW,
+				bluFW,
+				grnFW,
+				pnkFW
+			];
+			var sounds:Array<String>=[
+				Paths.sound('firework_explosion_001'),
+				Paths.sound('firework_explosion_002'),
+				Paths.sound('firework_explosion_003')
+			];
+			var fireworkCount:Int = FlxG.random.int(0,2);
+			for (i in 0...fireworkCount){
+				var fw = fireworks[FlxG.random.int(0,fireworks.length-1) ];
+				var snd = sounds[FlxG.random.int(0,sounds.length-1) ];
+				fireworks.remove(fw);
+				sounds.remove(snd);
+				new FlxTimer().start(FlxG.random.float(0.05,0.2),function( tmrw:FlxTimer ) {
+					fw.visible=true;
+					fw.animation.play("explode",true);
+					FlxG.sound.play(snd,0.5);
+				});
+			}
+
+			new FlxTimer().start(3, function(tmr:FlxTimer){
+				fireworking=false;
+			});
+	 }
 
 	override function beatHit()
 	{
@@ -3366,8 +3481,6 @@ class PlayState extends MusicBeatState
 				santa.animation.play('idle', true);
 			case 'fiesta':
 				bopFellas.animation.play('bop', true);
-			case 'rooftop':
-				bopIt.animation.play('bopIt', true);
 			case 'limo':
 				grpLimoDancers.forEach(function(dancer:BackgroundDancer)
 				{
@@ -3397,6 +3510,15 @@ class PlayState extends MusicBeatState
 				{
 					trainCooldown = FlxG.random.int(-4, 0);
 					trainStart();
+				}
+			case "rooftop":
+				bopIt.animation.play('bopIt', true);
+				if(!fireworking)
+					fireworkTimer++;
+
+				if(FlxG.random.bool(10) && !fireworking && fireworkTimer>=nextFirework){
+					theFireWorks();
+					nextFirework = FlxG.random.int(24,48);
 				}
 		}
 
