@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="logoBumpin.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bump0000" x="0" y="0" width="894" height="695" frameX="-22" frameY="-17" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0001" x="894" y="0" width="939" height="712" frameX="0" frameY="0" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0002" x="894" y="0" width="939" height="712" frameX="0" frameY="0" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0003" x="1833" y="0" width="912" height="704" frameX="-13" frameY="-10" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0004" x="1833" y="0" width="912" height="704" frameX="-13" frameY="-10" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0005" x="2745" y="0" width="905" height="702" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0006" x="0" y="712" width="905" height="693" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0007" x="0" y="712" width="905" height="693" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0008" x="0" y="712" width="905" height="693" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0009" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0010" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0011" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0012" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0013" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0014" x="905" y="712" width="905" height="684" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0015" x="1810" y="712" width="894" height="679" frameX="-22" frameY="-17" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0016" x="2704" y="712" width="939" height="704" frameX="0" frameY="0" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0017" x="0" y="1416" width="939" height="705" frameX="0" frameY="0" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0018" x="939" y="1416" width="912" height="695" frameX="-13" frameY="-10" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0019" x="939" y="1416" width="912" height="695" frameX="-13" frameY="-10" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0020" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0021" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0022" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0023" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0024" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0025" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0026" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0027" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0028" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+	<SubTexture name="bump0029" x="1851" y="1416" width="905" height="686" frameX="-17" frameY="-12" frameWidth="939" frameHeight="714"/>
+</TextureAtlas>

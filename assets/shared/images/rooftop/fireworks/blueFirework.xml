@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="blueFirework.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="blue0000" x="0" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0001" x="830" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0002" x="1660" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0003" x="2490" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0004" x="3320" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0005" x="4150" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0006" x="4980" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0007" x="5810" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0008" x="6640" y="0" width="820" height="1326"/>
+	<SubTexture name="blue0009" x="0" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0010" x="830" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0011" x="1660" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0012" x="2490" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0013" x="3320" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0014" x="4150" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0015" x="4980" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0016" x="5810" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0017" x="6640" y="1336" width="820" height="1326"/>
+	<SubTexture name="blue0018" x="0" y="2672" width="820" height="1326"/>
+	<SubTexture name="blue0019" x="830" y="2672" width="820" height="1326"/>
+	<SubTexture name="blue0020" x="1660" y="2672" width="820" height="1326"/>
+	<SubTexture name="blue0021" x="2490" y="2672" width="820" height="1326"/>
+	<SubTexture name="blue0022" x="3320" y="2672" width="820" height="1326"/>
+	<SubTexture name="blue0023" x="3320" y="2672" width="820" height="1326"/>
+</TextureAtlas>
