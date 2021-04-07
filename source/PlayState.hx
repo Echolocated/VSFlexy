@@ -659,6 +659,16 @@ class PlayState extends MusicBeatState
 			fg.active = false;
 			add(fg);
 
+
+			var overlay:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('fiesta/overlay'));
+			overlay.setGraphicSize(1280, 720);
+			overlay.antialiasing = true;
+			overlay.alpha = 0.5;
+			overlay.screenCenter(XY);
+			overlay.active = false;
+			overlay.cameras = [camHUD];
+			add(overlay);
+
 		case 'globetrotter':
 			defaultCamZoom = 0.80;
 			curStage = 'rooftop';
@@ -770,8 +780,8 @@ class PlayState extends MusicBeatState
 			wall.scrollFactor.set(1, 1);
 			wall.active = false;
 			wall.setGraphicSize (Std.int(wall.width * 1.3));
-			wall.x -= 490;
-			wall.y += 50;
+			wall.x -= 630;
+			wall.y += 80;
 			add(wall);
 
 			var fg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('rooftop/fg'));
@@ -782,6 +792,15 @@ class PlayState extends MusicBeatState
 			fg.setGraphicSize (Std.int(fg.width * 1.5));
 			fg.active = false;
 			add(fg);
+
+			var overlay:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('rooftop/overlay'));
+			overlay.setGraphicSize(1280, 720);
+			overlay.antialiasing = true;
+			overlay.alpha = 0.6;
+			overlay.screenCenter(XY);
+			overlay.active = false;
+			overlay.cameras = [camHUD];
+			add(overlay);
 
 		default:
 
