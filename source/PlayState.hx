@@ -126,11 +126,11 @@ class PlayState extends MusicBeatState
 
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
-	private var camHUD:FlxCamera;
+	public static var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
-
+	var endDialogue:Array<String> = ['bruh','penis penis','skeleton time'];
 	var halloweenBG:FlxSprite;
 	var isHalloween:Bool = false;
 
@@ -293,6 +293,7 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('noche/nocheDialogue'));
 			case 'desierto':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('desierto/desiertoDialogue'));
+				endDialogue = CoolUtil.coolTextFile(Paths.txt('desierto/deserttrotterDialogue'));
 			case 'globetrotter':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('globetrotter/globetrotterDialogue'));
 		}
@@ -611,7 +612,7 @@ class PlayState extends MusicBeatState
 
 		case 'noche' | 'desierto':
 
-			defaultCamZoom = 0.65;
+			defaultCamZoom = 0.7;
 			curStage = 'fiesta';
 
 			var bg:FlxSprite = new FlxSprite(-600, -600).loadGraphic(Paths.image('fiesta/sky'));
@@ -793,10 +794,10 @@ class PlayState extends MusicBeatState
 			fg.active = false;
 			add(fg);
 
-			var overlay:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('rooftop/overlay'));
+			var overlay:FlxSprite = new FlxSprite(0,0).loadGraphic(Paths.image('rooftop/2overlay'));
 			overlay.setGraphicSize(1280, 720);
 			overlay.antialiasing = true;
-			overlay.alpha = 0.6;
+			overlay.alpha = 0.7;
 			overlay.screenCenter(XY);
 			overlay.active = false;
 			overlay.cameras = [camHUD];
@@ -1262,6 +1263,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
+				case 'globetrotter':
+					deadmanpenis(doof);
 				default:
                     if(doof!=null){
                         showDialogue(doof);
@@ -1287,6 +1290,38 @@ class PlayState extends MusicBeatState
 		super.create();
 	}
 
+
+	function deadmanpenis(?d:DialogueBox):Void {
+		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+		black.alpha=1;
+		add(black);
+
+		var ilookedatmyfuckingPENIS:FlxSprite = new FlxSprite();
+		ilookedatmyfuckingPENIS.frames = Paths.getSparrowAtlas('deadmanpensus');
+		ilookedatmyfuckingPENIS.animation.addByPrefix('idle', 'zzzz', 24, false);
+		ilookedatmyfuckingPENIS.setGraphicSize(Std.int(FlxG.width*(1280/960) ),Std.int(FlxG.height*(1280/960) ));
+		ilookedatmyfuckingPENIS.scrollFactor.set();
+		ilookedatmyfuckingPENIS.updateHitbox();
+		ilookedatmyfuckingPENIS.screenCenter();
+		add(ilookedatmyfuckingPENIS);
+
+		FlxG.camera.fade(FlxG.camera.bgColor,.5,true, function(){
+			FlxG.sound.play(Paths.sound('PENISmorelikePENSUS'), 1, false, null, true);
+			ilookedatmyfuckingPENIS.animation.play('idle');
+			ilookedatmyfuckingPENIS.animation.finishCallback = function(name){
+				FlxG.camera.fade(FlxG.camera.bgColor, .5, false,function(){
+
+					remove(ilookedatmyfuckingPENIS);
+					remove(black);
+					FlxG.camera.fade(FlxG.camera.bgColor, .5, true,function(){
+						showDialogue(d);
+					});
+				});
+			}
+		});
+
+
+	}
 
 	function showDialogue(?d:DialogueBox):Void {
 		new FlxTimer().start(0.3, function(tmr:FlxTimer){
@@ -2436,16 +2471,26 @@ class PlayState extends MusicBeatState
 					camHUD.visible = false;
 
 					FlxG.sound.play(Paths.sound('Lights_Shut_off'));
+					gotoNextSong();
+				}else if(SONG.song.toLowerCase() == 'desierto'){
+					camHUD.visible = false;
+					//FlxTween.tween(FlxG.camera, {zoom:1}, 0.2);
+					var doof:DialogueBox = new DialogueBox(false, endDialogue);
+
+
+					// doof.x += 70;
+					// doof.y = FlxG.height * 0.5;
+					doof.scrollFactor.set();
+					doof.finishThing = function(){
+						FlxG.camera.fade(FlxG.camera.bgColor, .5, false,function(){
+							gotoNextSong();
+						});
+					};
+					inCutscene=true;
+					showDialogue(doof);
+				}else{
+					gotoNextSong();
 				}
-
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				prevCamFollow = camFollow;
-
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
-				FlxG.sound.music.stop();
-
-				LoadingState.loadAndSwitchState(new PlayState());
 			}
 		}
 		else
@@ -2453,6 +2498,24 @@ class PlayState extends MusicBeatState
 			trace('WENT BACK TO FREEPLAY??');
 			FlxG.switchState(new FreeplayState());
 		}
+	}
+
+	private function gotoNextSong(){
+		var difficulty:String = "";
+
+		if (storyDifficulty == 0)
+			difficulty = '-easy';
+
+		if (storyDifficulty == 2)
+			difficulty = '-hard';
+		FlxTransitionableState.skipNextTransIn = true;
+		FlxTransitionableState.skipNextTransOut = true;
+		prevCamFollow = camFollow;
+
+		PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
+		FlxG.sound.music.stop();
+
+		LoadingState.loadAndSwitchState(new PlayState());
 	}
 
 	var endingSong:Bool = false;
