@@ -188,7 +188,6 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 
-		theFunne = FlxG.save.data.newInput;
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
@@ -2593,7 +2592,7 @@ class PlayState extends MusicBeatState
 								totalNotesHit-=2;
 							}
 							ss = false;
-							if (theFunne)
+							if (FlxG.save.data.inputSystem == "Vanilla")
 								{
 									score = -300;
 									combo = 0;
@@ -2613,7 +2612,7 @@ class PlayState extends MusicBeatState
 					}else{
 						totalNotesHit += .55;
 					}
-					if (theFunne)
+					if (FlxG.save.data.inputSystem == "Vanilla")
 					{
 						score = 0;
 						health -= 0.03;
@@ -2874,18 +2873,7 @@ class PlayState extends MusicBeatState
 				rep.replay.keyReleases.push({time: Conductor.songPosition, key: "left"});
 		}
 
-		if(upP){
-			trace("upP");
-		}
-		if(rightP){
-			trace("rightP");
-		}
-		if(downP){
-			trace("downP");
-		}
-		if(leftP){
-			trace("leftP");
-		}
+		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if ((upP || rightP || downP || leftP) && !boyfriend.stunned && generatedMusic)
@@ -2912,7 +2900,6 @@ class PlayState extends MusicBeatState
 
 				if (possibleNotes.length > 0)
 				{
-					var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 					var daNote = possibleNotes[0];
 
 					// Jump notes
@@ -2922,6 +2909,7 @@ class PlayState extends MusicBeatState
 						{
 							for (coolNote in possibleNotes)
 							{
+
 								if (controlArray[coolNote.noteData])
 									goodNoteHit(coolNote);
 								else
@@ -2932,9 +2920,6 @@ class PlayState extends MusicBeatState
 										if (controlArray[ignoreList[shit]])
 											inIgnoreList = true;
 									}
-									if (!inIgnoreList && FlxG.save.data.inputSystem=="Vanilla")
-										trace("NOT IN IGNORELIST");
-										badNoteCheck();
 								}
 							}
 						}
@@ -2942,6 +2927,7 @@ class PlayState extends MusicBeatState
 						{
 							if (loadRep)
 							{
+
 								if (NearlyEquals(daNote.strumTime,rep.replay.keyPresses[repPresses].time, 30))
 								{
 									goodNoteHit(daNote);
@@ -2993,11 +2979,6 @@ class PlayState extends MusicBeatState
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-				}
-				else if(FlxG.save.data.inputSystem=="Vanilla")
-				{
-					trace("NO POSSIBLE NOTES");
-					badNoteCheck();
 				}
 			}
 
@@ -3233,11 +3214,7 @@ class PlayState extends MusicBeatState
 					{
 						goodNoteHit(note);
 					}
-					else if (FlxG.save.data.inputSystem=="Vanilla")
-						trace("WTF");
-						badNoteCheck();
 				}
-				else if (FlxG.save.data.inputSystem=="Vanilla")trace("WTF2"); badNoteCheck();
 			}
 			else if (controlArray[note.noteData])
 				{
@@ -3248,26 +3225,27 @@ class PlayState extends MusicBeatState
 
 					// ANTI MASH CODE FOR THE BOYS
 
-					if (mashing <= getKeyPresses(note) + 1 && mashViolations < 2)
+					if (mashing <= getKeyPresses(note) && mashViolations < 2)
 					{
 						mashViolations++;
-						goodNoteHit(note, (mashing <= getKeyPresses(note) + 1));
+
+						goodNoteHit(note, (mashing <= getKeyPresses(note)));
 					}
 					else
 					{
-						playerStrums.members[note.noteData].animation.play('static');
+						// this is bad but fuck you
+						playerStrums.members[0].animation.play('static');
+						playerStrums.members[1].animation.play('static');
+						playerStrums.members[2].animation.play('static');
+						playerStrums.members[3].animation.play('static');
 						trace('mash ' + mashing);
 					}
 
 					if (mashing != 0)
 						mashing = 0;
 				}
-			else if (FlxG.save.data.inputSystem=="Vanilla")
-			{
-				trace("DIDNT HIT " + controlArray[note.noteData], note.noteData, controlArray);
-				badNoteCheck();
-			}
 		}
+
 
 		function goodNoteHit(note:Note, resetMashViolation = true):Void
 			{
@@ -3279,8 +3257,8 @@ class PlayState extends MusicBeatState
 				{
 					if (!note.isSustainNote)
 					{
-						popUpScore(note.strumTime);
 						combo += 1;
+						popUpScore(note.strumTime);
 						if(combo>highestCombo)
 							highestCombo=combo;
 
