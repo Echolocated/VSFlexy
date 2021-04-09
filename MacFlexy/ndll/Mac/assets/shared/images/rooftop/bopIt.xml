@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bopIt.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bopIt0000" x="0" y="0" width="3877" height="2227" frameX="0" frameY="-32" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0001" x="0" y="0" width="3877" height="2227" frameX="0" frameY="-32" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0002" x="3877" y="0" width="3833" height="2256" frameX="-4" frameY="-29" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0003" x="3877" y="0" width="3833" height="2256" frameX="-4" frameY="-29" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0004" x="0" y="2256" width="3794" height="2339" frameX="-15" frameY="0" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0005" x="0" y="2256" width="3794" height="2339" frameX="-15" frameY="0" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0006" x="3794" y="2256" width="3796" height="2321" frameX="-16" frameY="-7" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0007" x="3794" y="2256" width="3796" height="2321" frameX="-16" frameY="-7" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0008" x="3794" y="2256" width="3796" height="2321" frameX="-16" frameY="-7" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0009" x="3794" y="2256" width="3796" height="2321" frameX="-16" frameY="-7" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0010" x="3794" y="2256" width="3796" height="2321" frameX="-16" frameY="-7" frameWidth="3877" frameHeight="2339"/>
+	<SubTexture name="bopIt0011" x="0" y="0" width="3877" height="2227" frameX="0" frameY="-32" frameWidth="3877" frameHeight="2339"/>
+</TextureAtlas>

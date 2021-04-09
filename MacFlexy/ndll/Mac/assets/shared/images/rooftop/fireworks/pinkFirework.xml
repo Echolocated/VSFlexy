@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="pinkFirework.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="pink0000" x="0" y="0" width="479" height="369"/>
+	<SubTexture name="pink0001" x="489" y="0" width="479" height="369"/>
+	<SubTexture name="pink0002" x="978" y="0" width="479" height="369"/>
+	<SubTexture name="pink0003" x="1467" y="0" width="479" height="369"/>
+	<SubTexture name="pink0004" x="1956" y="0" width="479" height="369"/>
+	<SubTexture name="pink0005" x="1956" y="0" width="479" height="369"/>
+	<SubTexture name="pink0006" x="2445" y="0" width="479" height="369"/>
+	<SubTexture name="pink0007" x="2934" y="0" width="479" height="369"/>
+	<SubTexture name="pink0008" x="3423" y="0" width="479" height="369"/>
+	<SubTexture name="pink0009" x="3423" y="0" width="479" height="369"/>
+	<SubTexture name="pink0010" x="0" y="379" width="479" height="369"/>
+	<SubTexture name="pink0011" x="489" y="379" width="479" height="369"/>
+	<SubTexture name="pink0012" x="978" y="379" width="479" height="369"/>
+	<SubTexture name="pink0013" x="1467" y="379" width="479" height="369"/>
+	<SubTexture name="pink0014" x="1956" y="379" width="479" height="369"/>
+	<SubTexture name="pink0015" x="2445" y="379" width="479" height="369"/>
+	<SubTexture name="pink0016" x="2934" y="379" width="479" height="369"/>
+	<SubTexture name="pink0017" x="3423" y="379" width="479" height="369"/>
+	<SubTexture name="pink0018" x="0" y="758" width="479" height="369"/>
+	<SubTexture name="pink0019" x="489" y="758" width="479" height="369"/>
+	<SubTexture name="pink0020" x="978" y="758" width="479" height="369"/>
+	<SubTexture name="pink0021" x="1467" y="758" width="479" height="369"/>
+	<SubTexture name="pink0022" x="1956" y="758" width="479" height="369"/>
+	<SubTexture name="pink0023" x="2445" y="758" width="479" height="369"/>
+</TextureAtlas>

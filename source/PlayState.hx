@@ -2237,7 +2237,16 @@ class PlayState extends MusicBeatState
 					// FlxG.switchState(new TitleState());
 			}
 		}
-
+		if (curSong == 'Desierto')
+		{
+			switch (curBeat)
+			{
+				case 208:
+					gfSpeed = 2;
+				case 240:
+					gfSpeed = 1;
+			}
+		}
 		if (curSong == 'Globetrotter')
 		{
 			switch (curBeat)

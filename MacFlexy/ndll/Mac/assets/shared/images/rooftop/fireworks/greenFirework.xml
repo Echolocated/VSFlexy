@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="greenFirework.png">
+	<!-- Created with Adobe Animate version 21.0.4.39603 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="yellow0000" x="0" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0001" x="578" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0002" x="1156" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0003" x="1734" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0004" x="1734" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0005" x="2312" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0006" x="2890" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0007" x="3468" y="0" width="568" height="642"/>
+	<SubTexture name="yellow0008" x="0" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0009" x="578" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0010" x="1156" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0011" x="1734" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0012" x="2312" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0013" x="2890" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0014" x="3468" y="652" width="568" height="642"/>
+	<SubTexture name="yellow0015" x="0" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0016" x="578" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0017" x="1156" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0018" x="1734" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0019" x="2312" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0020" x="2890" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0021" x="3468" y="1304" width="568" height="642"/>
+	<SubTexture name="yellow0022" x="0" y="1956" width="568" height="642"/>
+	<SubTexture name="yellow0023" x="578" y="1956" width="568" height="642"/>
+</TextureAtlas>
