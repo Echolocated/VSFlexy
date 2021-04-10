@@ -2590,7 +2590,7 @@ class PlayState extends MusicBeatState
 								totalNotesHit-=2;
 							}
 							ss = false;
-							if (FlxG.save.data.inputSystem == "Vanilla")
+							if (FlxG.save.data.newInput)
 								{
 									score = -300;
 									combo = 0;
@@ -2610,7 +2610,7 @@ class PlayState extends MusicBeatState
 					}else{
 						totalNotesHit += .55;
 					}
-					if (FlxG.save.data.inputSystem == "Vanilla")
+					if (FlxG.save.data.newInput)
 					{
 						score = 0;
 						health -= 0.03;
@@ -2636,9 +2636,7 @@ class PlayState extends MusicBeatState
 				}
 				case 'sick':
 				{
-					trace(totalNotesHit);
 					totalNotesHit += 1;
-					trace(totalNotesHit);
 					if (health < 2)
 						health += 0.1;
 					sicks++;
@@ -3077,7 +3075,7 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			health -= 0.04;
-			if (combo > 5 && gf.animOffsets.exists('sad'))
+			if (combo > 5 && gf.animOffsets.exists('sad') && !FlxG.save.data.playOpponent)
 			{
 				gf.playAnim('sad');
 			}
