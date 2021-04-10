@@ -69,7 +69,7 @@ class FreeplayState extends MusicBeatState
 		// LOAD CHARACTERS
 
 		var bg:FlxSprite = new FlxSprite();
-		if(FlxG.random.bool(1000)){
+		if(FlxG.random.bool(256)){
 			bg.loadGraphic(Paths.image('menuBGBlue'));
 		}else{
 			bg.loadGraphic(Paths.image('alternateending'));

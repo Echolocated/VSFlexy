@@ -499,7 +499,7 @@ class Controls extends FlxActionSet
 		#if (haxe >= "4.0.0")
 		switch (scheme)
 		{
-			case WASD:
+			case DFJK:
 				inline bindKeys(Control.UP, [J, FlxKey.UP]);
 				inline bindKeys(Control.DOWN, [F, FlxKey.DOWN]);
 				inline bindKeys(Control.LEFT, [D, FlxKey.LEFT]);
@@ -508,7 +508,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
 				inline bindKeys(Control.RESET, [R]);
-			case DFJK:
+			case WASD:
 				inline bindKeys(Control.UP, [W, FlxKey.UP]);
 				inline bindKeys(Control.DOWN, [S, FlxKey.DOWN]);
 				inline bindKeys(Control.LEFT, [A, FlxKey.LEFT]);

@@ -267,20 +267,20 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'tutorial':
-				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
+				dialogue = [":flexy:Hey you're pretty cute.", ':flexyhappy:Use the arrow keys to keep up \nwith me singing.'];
 			case 'bopeebo':
 				dialogue = [
-					'HEY!',
-					"You think you can just sing\nwith my daughter like that?",
-					"If you want to date her...",
-					"You're going to have to go \nthrough ME first!"
+					':flexy:HEY!',
+					":flexy:You think you can just sing\nwith my daughter like that?",
+					":flexyhappy:If you want to date her...",
+					":dmp:You're going to have to go \nthrough ME first!"
 				];
 			case 'fresh':
-				dialogue = ["Not too shabby boy.", ""];
+				dialogue = [":dmp:Not too shabby boy.", ""];
 			case 'dadbattle':
 				dialogue = [
-					"mmhhhhh anything you do to my daughter.....",
-					"MGMGMGMMGMGMGMGGGHGHGHGH IILLLL DOOO TO YOU TOOOOO",
+					":dmp:mmhhhhh anything you do to my daughter.....",
+					":dmp:MGMGMGMMGMGMGMGGGHGHGHGH IILLLL DOOO TO YOU TOOOOO",
 				];
 			case 'senpai':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
@@ -852,10 +852,8 @@ class PlayState extends MusicBeatState
 
 		if(SONG.song.toLowerCase()=='globetrotter'){
 			gf.setGraphicSize(Std.int(gf.width * 0.8));
-			add(gf);
-		}else{
-			add(gf);
 		}
+		add(gf);
 		// Shitty layering but whatev it works LOL
 		if (curStage == 'limo')
 			add(limo);
