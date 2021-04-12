@@ -1,5 +1,5 @@
 @echo off
 echo BUILDING
-lime test windows -debug
+lime test windows -release
 echo DONE
 pause
