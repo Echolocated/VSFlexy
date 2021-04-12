@@ -109,7 +109,7 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			portraitLeft.frames = Paths.getSparrowAtlas('weeb/senpaiPortrait');
 			portraitLeft.animation.addByPrefix('enter', 'Senpai Portrait Enter', 24, false);
-			portraitLeft.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+			portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
 		}else{
 			portraitLeft.frames = Paths.getSparrowAtlas('ports');
 			portraitLeft.animation.addByPrefix('enter', PlayState.SONG.player2, 24, false);
