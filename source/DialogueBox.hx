@@ -113,13 +113,12 @@ class DialogueBox extends FlxSpriteGroup
 		}else{
 			portraitLeft.frames = Paths.getSparrowAtlas('ports');
 			portraitLeft.animation.addByPrefix('enter', PlayState.SONG.player2, 24, false);
-			portraitLeft.setGraphicSize(Std.int(portraitLeft.width*(1+(1-FlxG.camera.zoom))));
 		}
 
 
 		portraitLeft.updateHitbox();
 		portraitLeft.scrollFactor.set();
-
+		portraitLeft.setGraphicSize(Std.int(portraitLeft.width*(1+(1-FlxG.camera.zoom))));
 		add(portraitLeft);
 		portraitLeft.visible = false;
 
@@ -133,10 +132,10 @@ class DialogueBox extends FlxSpriteGroup
 		}else{
 			portraitRight.frames = Paths.getSparrowAtlas('bfPort');
 			portraitRight.animation.addByPrefix('enter', 'bfPort', 24, false);
-			portraitRight.setGraphicSize(Std.int(portraitRight.width*(1+(1-FlxG.camera.zoom))));
 		}
 
 		portraitRight.updateHitbox();
+		portraitRight.setGraphicSize(Std.int(portraitRight.width*(1+(1-FlxG.camera.zoom))));
 		portraitRight.scrollFactor.set();
 		add(portraitRight);
 		portraitRight.visible = false;
