@@ -2375,7 +2375,7 @@ class PlayState extends MusicBeatState
 							//if (FlxG.save.data.inputSystem!="Vanilla")
 								noteMiss(daNote.noteData);
 						}else if(daNote.isSustainNote && !daNote.wasGoodHit){
-							health-=.02;
+							health-=.04;
 							combo = 0;
 							vocals.volume = 0;
 							misses++;
@@ -2638,7 +2638,7 @@ class PlayState extends MusicBeatState
 				{
 					totalNotesHit += 1;
 					if (health < 2)
-						health += 0.1;
+						health += 0.075;
 					sicks++;
 				}
 			};
@@ -3074,7 +3074,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			health -= 0.04;
+			health -= 0.125;
 			if (combo > 5 && gf.animOffsets.exists('sad') && !FlxG.save.data.playOpponent)
 			{
 				gf.playAnim('sad');
@@ -3261,7 +3261,7 @@ class PlayState extends MusicBeatState
 						highComboTxt.text = "Highest Combo: " + highestCombo;
 					}
 					else{
-						health+=.05;
+						health+=.02;
 						totalNotesHit+=1;
 					}
 					switch (note.noteData)
