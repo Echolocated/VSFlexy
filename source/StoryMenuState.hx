@@ -27,7 +27,7 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
-		['Noche', 'Desierto', 'Globetrotter']
+		['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta']
 	];
 	var curDifficulty:Int = 1;
 
@@ -425,7 +425,7 @@ class StoryMenuState extends MusicBeatState
 
 		for (i in stringThing)
 		{
-			if(curWeek!=7 || i!='Personal-Space-Invasion'){
+			if(curWeek!=7 || i!='Gran-Venta'){
 				txtTracklist.text += "\n" + i;
 			}
 		}

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="ports.png">
-	<!-- Created with Adobe Animate version 21.0.4.39603 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="dmp0000" x="0" y="0" width="300" height="300"/>
-	<SubTexture name="flexy0000" x="300" y="0" width="300" height="300"/>
-	<SubTexture name="flexyhappy0000" x="600" y="0" width="300" height="300"/>
-</TextureAtlas>

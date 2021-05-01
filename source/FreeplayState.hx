@@ -61,7 +61,7 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
 
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
-			addWeek(['Noche', 'Desierto', 'Globetrotter'], 7, ['flexy', 'flexy', 'dmp']);
+			addWeek(['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta'], 7, ['flexy', 'flexy', 'dmp', 'merchant']);
 
 
 		// LOAD MUSIC
@@ -205,7 +205,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
-		if(songs[curSelected].songName=="You-Are-A-Fool" && curDifficulty==0){
+		if(songs[curSelected].songName=="Gran-Venta" && curDifficulty==0){
 			changeDiff(curDifficulty+1);
 		}
 
@@ -241,12 +241,6 @@ class FreeplayState extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		#end
-
-		if(songs[curSelected].songName=="You-Are-A-Fool"){
-			if(curDifficulty==0){
-				curDifficulty=1;
-			}
-		}
 
 		switch (curDifficulty)
 		{
