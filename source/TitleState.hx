@@ -376,49 +376,46 @@ class TitleState extends MusicBeatState
 				createCoolText(['Echolocated', 'ravvytavvy', 'lizzellz', 'nebula']);
 			// credTextShit.visible = true;
 			case 3:
+				deleteCoolText();
+			case 4:
 				addMoreText('present');
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
-			case 4:
+			case 5:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
-			case 5:
-				createCoolText(['Kade Engine', 'by', 'KadeDeveloper']);
-			case 7:
-
-			// credTextShit.text += '\nNewgrounds';
-			case 8:
+			case 6:
 				deleteCoolText();
-				createCoolText(['Modified','by','Nebula the Zorua']);
+				createCoolText(['Engine','by','Nebula the Zorua']);
 				ngSpr.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
-			case 9:
-
+			case 8:
+				deleteCoolText();
 			// credTextShit.visible = true;
-			case 11:
+			case 9:
 				deleteCoolText();
 				createCoolText(curWacky);
 			// credTextShit.text += '\nlmao';
-			case 12:
+			case 11:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 13:
+			case 12:
 				addMoreText('Funkin');
 			// credTextShit.visible = true;
-			case 14:
+			case 13:
 				addMoreText('With');
 			// credTextShit.text += '\nNight';
-			case 15:
+			case 14:
 				addMoreText('Flexy'); // credTextShit.text += '\nFunkin';
 
-			case 16:
+			case 15:
 				skipIntro();
 		}
 	}
