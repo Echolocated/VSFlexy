@@ -212,14 +212,11 @@ class FreeplayState extends MusicBeatState
 		if (accepted)
 		{
 			var name = songs[curSelected].songName.toLowerCase();
-			if(name=="i-am-a-fool"){
-				name="you-are-a-fool";
-			}
 			var poop:String = Highscore.formatSong(name, curDifficulty);
 
 			trace(poop);
 
-			PlayState.SONG = Song.loadFromJson(poop, name=="you-are-a-fool" ? "dontgopeekingaroundwhereyoushouldnt" : name);
+			PlayState.SONG = Song.loadFromJson(poop, name);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 

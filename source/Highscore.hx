@@ -13,6 +13,9 @@ class Highscore
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
 	{
+		if(song=='Pain-Gran-Venta'){
+			song='Gran-Venta';
+		}
 		var daSong:String = formatSong(song, diff);
 
 
