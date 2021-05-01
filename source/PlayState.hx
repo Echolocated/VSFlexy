@@ -38,7 +38,8 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
-
+import lime.app.Application;
+import openfl.Lib;
 
 using StringTools;
 
@@ -1939,6 +1940,17 @@ class PlayState extends MusicBeatState
 		}
 
 		var timer:Float = 0;
+		var prev:Float = 0;
+
+	function clamp(val:Float,min:Float,max:Float) : Int{
+		if(val>min && val<max)
+			return Std.int(val);
+		else if (val<min)
+			return Std.int(min);
+		else
+			return Std.int(max);
+	}
+
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -1946,7 +1958,6 @@ class PlayState extends MusicBeatState
 		#end
 		songPositionBar = Conductor.songPosition;
 
-		timer+=elapsed;
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
@@ -1981,7 +1992,7 @@ class PlayState extends MusicBeatState
 		{
 			scoreTxt.text = "Score:" + songScore;
 		}
-		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause && (SONG.song.toLowerCase()!='pain-gran-venta' || curStep<=2520 ) )
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
@@ -1991,15 +2002,17 @@ class PlayState extends MusicBeatState
 			if (FlxG.random.bool(0.1))
 			{
 				// gitaroo man easter egg
+				FlxG.autoPause=true;
 				FlxG.switchState(new GitarooPause());
 			}
 			else
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+
 		}
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-
+			FlxG.autoPause=true;
 			FlxG.switchState(new ChartingState());
 		}
 
@@ -2039,7 +2052,9 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
+		FlxG.autoPause=true;
 			FlxG.switchState(new AnimationDebug(SONG.player2));
+
 		#end
 
 		if (startingSong)
@@ -2255,6 +2270,62 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if(curSong == "Pain-Gran-Venta"){
+			//2520
+			switch (curStep)
+			{
+				case 2520:
+
+			}
+			if(curStep>=2520){
+				var currY:Float = 0;
+				var currX:Float = 0;
+				var displayBounds = Lib.application.window.display.bounds;
+
+				if(Lib.application.window.fullscreen)
+					Lib.application.window.fullscreen = false;
+				if(Lib.application.window.minimized)
+					Lib.application.window.minimized = false;
+				if(Lib.application.window.maximized)
+					Lib.application.window.maximized = false;
+
+				FlxG.autoPause=false;
+				var x:Float = (displayBounds.width-Lib.application.window.width)/2;
+				var y:Float = (displayBounds.height-Lib.application.window.height)/2;
+				trace("Y: " + y);
+				if(curStep<2544){
+					currY = ((Math.cos(timer*2)*2))*Lib.application.window.scale;
+				}else if(curStep<2608){
+					var limit = Std.int(FlxMath.lerp(10,0,(curStep-2545)/64));
+					currY = ((Math.cos(timer*2)*2)+FlxG.random.int(-limit,limit))*Lib.application.window.scale;
+					currX = FlxG.random.int(-limit,limit);
+				}else if (curStep<=2751){
+					currY = (Math.cos(timer*2)*36)*Lib.application.window.scale;
+				}else{
+					currY = (Math.cos(timer*4)*72)*Lib.application.window.scale;
+					currX = (Math.cos(timer*2)*48)*Lib.application.window.scale;
+				}
+				if(curStep<2607){
+					timer+=elapsed;
+				}else if(curStep>=3264) {
+					var bruh = Math.max(FlxMath.lerp(elapsed,0,(curStep-3264)/16),0);
+					timer+=bruh;
+				}else{
+					timer+=elapsed*2;
+				}
+				for(str in playerStrums){
+					str.y = strumLine.y+Math.abs(Math.cos(timer*4)*4);
+					str.x = str.health;
+				}
+
+
+
+				var yVal = Std.int(y+currY);
+				var xVal = Std.int(x+currX);
+				Lib.application.window.move(xVal,yVal);
+			}
+		}
+
 		if (curSong == 'Bopeebo')
 		{
 			switch (curBeat)
@@ -2440,8 +2511,9 @@ class PlayState extends MusicBeatState
 
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
-
+				FlxG.autoPause=true;
 				FlxG.switchState(new StoryMenuState());
+
 
 				// if ()
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
@@ -2502,7 +2574,9 @@ class PlayState extends MusicBeatState
 		else
 		{
 			trace('WENT BACK TO FREEPLAY??');
+			FlxG.autoPause=true;
 			FlxG.switchState(new FreeplayState());
+
 		}
 	}
 
@@ -2520,8 +2594,9 @@ class PlayState extends MusicBeatState
 
 		PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 		FlxG.sound.music.stop();
-
+		FlxG.autoPause=true;
 		LoadingState.loadAndSwitchState(new PlayState());
+
 	}
 
 	var endingSong:Bool = false;
