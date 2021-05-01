@@ -2353,22 +2353,24 @@ class PlayState extends MusicBeatState
 							150+Math.abs((25*Math.cos(timer*6)))-beatOffset,
 							90,
 					];*/
-					arrowOffset[0] = [
+					var freq=6;
+					var intes=3;
+					arrowOffset[0] = [ // left
 						beatOffset+(15*Math.cos(timer*6)),
-						(Math.cos((timer+.5)*6)*3),
+						(Math.cos((timer+.5)*freq)*intes),
 					];
-					arrowOffset[1] = [
+					arrowOffset[1] = [ // down
 						beatOffset/2+(15*Math.cos(timer*6)),
-						(Math.cos((timer+1)*6)*3),
+						(Math.cos((timer+1)*freq)*intes),
 						0
 					];
-					arrowOffset[2] = [
+					arrowOffset[2] = [ // up
 						-beatOffset/2+(15*Math.cos(timer*6)),
-						(Math.cos((timer+1.5)*6)*3),
+						(Math.cos((timer+1.5)*freq)*intes),
 					];
-					arrowOffset[3] = [
+					arrowOffset[3] = [ // right
 						-beatOffset+(15*Math.cos(timer*6)),
-						(Math.cos((timer+2)*6)*3),
+						(Math.cos((timer+2)*freq)*intes),
 					];
 				}
 				if(curStep<2607 && curStep>=2544){
