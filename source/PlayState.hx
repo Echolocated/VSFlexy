@@ -1732,7 +1732,6 @@ class PlayState extends MusicBeatState
 					{
 						sustainNote.x += FlxG.width / 2; // general offset
 					}
-					sustainNote.health = sustainNote.x;
 				}
 
 				swagNote.mustPress = gottaHitNote;
@@ -1744,7 +1743,6 @@ class PlayState extends MusicBeatState
 				else
 				{
 				}
-				swagNote.health = swagNote.x;
 			}
 			daBeats += 1;
 		}
@@ -1950,7 +1948,10 @@ class PlayState extends MusicBeatState
 		else
 			return Std.int(max);
 	}
-
+	var beatOffset:Float = 0;
+	var bruhTempGone=false;
+	var otherBruh=[];
+	var bru:Float=0;
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2270,6 +2271,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		beatOffset = FlxMath.lerp(beatOffset,0,.02);
 		if(curSong == "Pain-Gran-Venta"){
 			//2520
 			switch (curStep)
@@ -2292,7 +2294,14 @@ class PlayState extends MusicBeatState
 				FlxG.autoPause=false;
 				var x:Float = (displayBounds.width-Lib.application.window.width)/2;
 				var y:Float = (displayBounds.height-Lib.application.window.height)/2;
-				trace("Y: " + y);
+
+				var arrowOffset:Array<Array<Float>>=[
+					[0,0],
+					[0,0],
+					[0,0],
+					[0,0]
+				];
+
 				if(curStep<2544){
 					currY = ((Math.cos(timer*2)*2))*Lib.application.window.scale;
 				}else if(curStep<2608){
@@ -2301,11 +2310,68 @@ class PlayState extends MusicBeatState
 					currX = FlxG.random.int(-limit,limit);
 				}else if (curStep<=2751){
 					currY = (Math.cos(timer*2)*36)*Lib.application.window.scale;
-				}else{
-					currY = (Math.cos(timer*4)*72)*Lib.application.window.scale;
+				}else if(curStep<3008){
+					currY = ((Math.cos(timer*4)*72)+beatOffset/4)*Lib.application.window.scale;
 					currX = (Math.cos(timer*2)*48)*Lib.application.window.scale;
+				}else{
+					currY = ((Math.cos(timer*4)*18)+beatOffset/2)*Lib.application.window.scale;
+					currX = (Math.cos(timer*2)*12)*Lib.application.window.scale;
 				}
-				if(curStep<2607){
+				if(curStep<3008 && curStep>=2752){
+					arrowOffset[0] = [
+						beatOffset,
+						(Math.cos((timer+1)*6)*12),
+					];
+					arrowOffset[1] = [
+						beatOffset/2,
+						(Math.cos((timer+2)*6)*12),
+						0
+					];
+					arrowOffset[2] = [
+						-beatOffset/2,
+						(Math.cos((timer+3)*6)*12),
+					];
+					arrowOffset[3] = [
+						-beatOffset,
+						(Math.cos((timer+4)*6)*24),
+					];
+				}else if(curStep>=3008){
+					/*
+					arrowOffset[0] = [
+							30-Math.abs((25*Math.cos(timer*6)))+beatOffset,
+							90,
+					];
+					arrowOffset[1] = [
+							90,
+							150+Math.abs((25*Math.cos(timer*6)))-beatOffset,
+					];
+					arrowOffset[2] = [
+							90,
+							30-Math.abs((25*Math.cos(timer*6)))+beatOffset,
+					];
+					arrowOffset[3] = [
+							150+Math.abs((25*Math.cos(timer*6)))-beatOffset,
+							90,
+					];*/
+					arrowOffset[0] = [
+						beatOffset+(15*Math.cos(timer*6)),
+						(Math.cos((timer+.5)*6)*3),
+					];
+					arrowOffset[1] = [
+						beatOffset/2+(15*Math.cos(timer*6)),
+						(Math.cos((timer+1)*6)*3),
+						0
+					];
+					arrowOffset[2] = [
+						-beatOffset/2+(15*Math.cos(timer*6)),
+						(Math.cos((timer+1.5)*6)*3),
+					];
+					arrowOffset[3] = [
+						-beatOffset+(15*Math.cos(timer*6)),
+						(Math.cos((timer+2)*6)*3),
+					];
+				}
+				if(curStep<2607 && curStep>=2544){
 					timer+=elapsed;
 				}else if(curStep>=3264) {
 					var bruh = Math.max(FlxMath.lerp(elapsed,0,(curStep-3264)/16),0);
@@ -2313,9 +2379,10 @@ class PlayState extends MusicBeatState
 				}else{
 					timer+=elapsed*2;
 				}
-				for(str in playerStrums){
-					str.y = strumLine.y+Math.abs(Math.cos(timer*4)*4);
-					str.x = str.health;
+				for(idx in 0...arrowOffset.length){
+					var str = playerStrums.members[idx];
+					str.x = str.health+arrowOffset[idx][0];
+					str.y = strumLine.y+arrowOffset[idx][1];
 				}
 
 
@@ -2347,8 +2414,30 @@ class PlayState extends MusicBeatState
 
 			vocals.stop();
 			FlxG.sound.music.stop();
+			FlxG.autoPause=true;
+			if(SONG.song.toLowerCase()=='pain-gran-venta' && isStoryMode){
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+					transIn = FlxTransitionableState.defaultTransIn;
+					transOut = FlxTransitionableState.defaultTransOut;
+					FlxG.autoPause=true;
+					FlxG.switchState(new StoryMenuState());
+
+
+					// if ()
+					StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
+
+					if (SONG.validScore)
+					{
+						NGio.unlockMedal(60961);
+						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
+					}
+
+					FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
+					FlxG.save.flush();
+
+			}else openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+
 
 
 
@@ -2389,14 +2478,25 @@ class PlayState extends MusicBeatState
 					else
 						daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
+					if(daNote.mustPress){
+						daNote.y = daNote.y+(playerStrums.members[daNote.noteData].y-strumLine.y);
+						daNote.x = playerStrums.members[daNote.noteData].x;
+						if(daNote.isSustainNote){
+							daNote.x+=daNote.health;
+						}
+					}
 					//trace(daNote.y);
 					// WIP interpolation shit? Need to fix the pause issue
 					// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
+					var strumY:Float = strumLine.y;
+					if(daNote.mustPress){
+						strumY = playerStrums.members[daNote.noteData].y;
+					}
 					if (daNote.isSustainNote
-						&& daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2
+						&& daNote.y + daNote.offset.y <= strumY + Note.swagWidth / 2
 						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 					{
-						var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+						var swagRect = new FlxRect(0, strumY + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 						swagRect.y /= daNote.scale.y;
 						swagRect.height -= swagRect.y;
 
@@ -2438,7 +2538,7 @@ class PlayState extends MusicBeatState
 						daNote.destroy();
 					}
 
-					if (daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumLine.y + 106 && FlxG.save.data.downscroll)
+					if (daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumY + 106 && FlxG.save.data.downscroll)
 					{
 						if (!daNote.isSustainNote && !daNote.wasGoodHit)
 						{
@@ -3532,6 +3632,9 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+		if(curBeat%4==0)
+			beatOffset=-50;
+			trace("beat");
 
 		if (generatedMusic)
 		{

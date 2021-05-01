@@ -137,8 +137,8 @@ class Note extends FlxSprite
 			{
 				noteScore * 0.2;
 				alpha = 0.6;
-
-				x += width / 2;
+				var br:Float=0;
+				br += width / 2;
 
 				switch (noteData)
 				{
@@ -157,10 +157,13 @@ class Note extends FlxSprite
 
 				updateHitbox();
 
-				x -= width / 2;
+				br -= width / 2;
 
 				if (PlayState.curStage.startsWith('school'))
-					x += 30;
+					br += 30;
+
+				x+=br;
+				health=br;
 
 				if (prevNote.isSustainNote)
 				{
