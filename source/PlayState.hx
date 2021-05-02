@@ -3,12 +3,17 @@ package;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
+import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
+import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
+import flixel.addons.transition.TransitionData;
+import flixel.addons.transition.Transition;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.graphics.FlxGraphic;
 import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.display.FlxGridOverlay;
@@ -17,6 +22,7 @@ import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.transition.TransitionFade;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -1952,6 +1958,9 @@ class PlayState extends MusicBeatState
 	var bruhTempGone=false;
 	var otherBruh=[];
 	var bru:Float=0;
+	var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
+	var fakeTransition:TransitionMod;
+	var doneTransShit = false;
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2273,13 +2282,20 @@ class PlayState extends MusicBeatState
 
 		beatOffset = FlxMath.lerp(beatOffset,0,.02);
 		if(curSong == "Pain-Gran-Venta"){
-			//2520
-			switch (curStep)
-			{
-				case 2520:
+		 	if(curStep==2520 && doneTransShit==false){
+					doneTransShit=true;
+					persistentUpdate = true;
+					persistentDraw = true;
+					diamond.persist = true;
+					diamond.destroyOnNoUse = false;
+					var stuf = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
+						{asset: diamond, width: 32, height: 32}, new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
+					fakeTransition = new TransitionMod(stuf);
 
-			}
-			if(curStep>=2520){
+					openSubState(fakeTransition);
+					fakeTransition._effect.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+					fakeTransition.start(IN);
+			}else if(curStep>=2520){
 				var currY:Float = 0;
 				var currX:Float = 0;
 				var displayBounds = Lib.application.window.display.bounds;
@@ -2311,6 +2327,11 @@ class PlayState extends MusicBeatState
 				}else if (curStep<=2751){
 					currY = (Math.cos(timer*2)*36)*Lib.application.window.scale;
 				}else if(curStep<3008){
+					if(fakeTransition!=null){
+						closeSubState();
+						FlxG.camera.flash(FlxColor.WHITE,.25);
+						fakeTransition=null;
+					}
 					currY = ((Math.cos(timer*4)*72)+beatOffset/4)*Lib.application.window.scale;
 					currX = (Math.cos(timer*2)*48)*Lib.application.window.scale;
 				}else{
@@ -2333,7 +2354,7 @@ class PlayState extends MusicBeatState
 					];
 					arrowOffset[3] = [
 						-beatOffset,
-						(Math.cos((timer+4)*6)*24),
+						(Math.cos((timer+4)*6)*12),
 					];
 				}else if(curStep>=3008){
 					/*
@@ -2418,9 +2439,6 @@ class PlayState extends MusicBeatState
 			FlxG.autoPause=true;
 			if(SONG.song.toLowerCase()=='pain-gran-venta' && isStoryMode){
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-
-					transIn = FlxTransitionableState.defaultTransIn;
-					transOut = FlxTransitionableState.defaultTransOut;
 					FlxG.autoPause=true;
 					FlxG.switchState(new StoryMenuState());
 
@@ -2547,7 +2565,10 @@ class PlayState extends MusicBeatState
 							//if (FlxG.save.data.inputSystem!="Vanilla")
 								noteMiss(daNote.noteData);
 						}else if(daNote.isSustainNote && !daNote.wasGoodHit){
-							health-=.04;
+							if(SONG.song.toLowerCase()=='pain-gran-venta')
+								health-=.08;
+							else
+								health-=.04;
 							combo = 0;
 							vocals.volume = 0;
 							misses++;
@@ -2610,8 +2631,6 @@ class PlayState extends MusicBeatState
 			{
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut;
 				FlxG.autoPause=true;
 				FlxG.switchState(new StoryMenuState());
 
@@ -2716,7 +2735,7 @@ class PlayState extends MusicBeatState
 			//
 
 			var rating:FlxSprite = new FlxSprite();
-			var score:Int = 350;
+			var score:Int = 420;
 
 			var daRating:String = "shit";
 
@@ -2792,7 +2811,7 @@ class PlayState extends MusicBeatState
 						health -= 0.03;
 					}
 					else
-						score = 100;
+						score = 170;
 					ss = false;
 					bads++;
 				}
@@ -2806,7 +2825,7 @@ class PlayState extends MusicBeatState
 					}else{
 						totalNotesHit += .75;
 					}
-					score=200;
+					score=270;
 					ss = false;
 					goods++;
 				}
@@ -2814,7 +2833,10 @@ class PlayState extends MusicBeatState
 				{
 					totalNotesHit += 1;
 					if (health < 2)
-						health += 0.075;
+						if(SONG.song.toLowerCase()=='pain-gran-venta')
+							health += 0.025;
+						else
+							health += 0.075;
 					sicks++;
 				}
 			};
@@ -2983,202 +3005,68 @@ class PlayState extends MusicBeatState
 		var downP = controls.DOWN_P;
 		var leftP = controls.LEFT_P;
 
-		var upR = controls.UP_R;
-		var rightR = controls.RIGHT_R;
-		var downR = controls.DOWN_R;
-		var leftR = controls.LEFT_R;
-
-		if (loadRep) // replay code
-		{
-			// disable input
-			up = false;
-			down = false;
-			right = false;
-			left = false;
-
-			// new input
-
-
-			//if (rep.replay.keys[repPresses].time == Conductor.songPosition)
-			//	trace('DO IT!!!!!');
-
-			//timeCurrently = Math.abs(rep.replay.keyPresses[repPresses].time - Conductor.songPosition);
-			//timeCurrentlyR = Math.abs(rep.replay.keyReleases[repReleases].time - Conductor.songPosition);
-
-
-			if (repPresses < rep.replay.keyPresses.length && repReleases < rep.replay.keyReleases.length)
-			{
-				upP = NearlyEquals(rep.replay.keyPresses[repPresses].time, Conductor.songPosition) && rep.replay.keyPresses[repPresses].key == "up";
-				rightP = NearlyEquals(rep.replay.keyPresses[repPresses].time, Conductor.songPosition) && rep.replay.keyPresses[repPresses].key == "right";
-				downP = NearlyEquals(rep.replay.keyPresses[repPresses].time, Conductor.songPosition) && rep.replay.keyPresses[repPresses].key == "down";
-				leftP = NearlyEquals(rep.replay.keyPresses[repPresses].time, Conductor.songPosition)  && rep.replay.keyPresses[repPresses].key == "left";
-
-				upR = NearlyEquals(rep.replay.keyReleases[repReleases].time, Conductor.songPosition) && rep.replay.keyReleases[repReleases].key == "up";
-				rightR = NearlyEquals(rep.replay.keyReleases[repReleases].time, Conductor.songPosition) && rep.replay.keyReleases[repReleases].key == "right";
-				downR = NearlyEquals(rep.replay.keyReleases[repReleases].time, Conductor.songPosition) && rep.replay.keyReleases[repReleases].key == "down";
-				leftR = NearlyEquals(rep.replay.keyReleases[repReleases].time, Conductor.songPosition) && rep.replay.keyReleases[repReleases].key == "left";
-
-				upHold = upP ? true : upR ? false : true;
-				rightHold = rightP ? true : rightR ? false : true;
-				downHold = downP ? true : downR ? false : true;
-				leftHold = leftP ? true : leftR ? false : true;
-			}
-		}
-		else if (!loadRep) // record replay code
-		{
-			if (upP)
-				rep.replay.keyPresses.push({time: Conductor.songPosition, key: "up"});
-			if (rightP)
-				rep.replay.keyPresses.push({time: Conductor.songPosition, key: "right"});
-			if (downP)
-				rep.replay.keyPresses.push({time: Conductor.songPosition, key: "down"});
-			if (leftP)
-				rep.replay.keyPresses.push({time: Conductor.songPosition, key: "left"});
-
-			if (upR)
-				rep.replay.keyReleases.push({time: Conductor.songPosition, key: "up"});
-			if (rightR)
-				rep.replay.keyReleases.push({time: Conductor.songPosition, key: "right"});
-			if (downR)
-				rep.replay.keyReleases.push({time: Conductor.songPosition, key: "down"});
-			if (leftR)
-				rep.replay.keyReleases.push({time: Conductor.songPosition, key: "left"});
-		}
-
+		// TODO: re-implement shitty replay system from KE
+		// or remove it probably lol
+		var holdArray:Array<Bool> = [left,down,up,right];
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-
 		// FlxG.watch.addQuick('asdfa', upP);
-		if ((upP || rightP || downP || leftP) && !boyfriend.stunned && generatedMusic)
-			{
-				repPresses++;
-				boyfriend.holdTimer = 0;
 
+		if((left || right || up || down) && generatedMusic ){
+			notes.forEachAlive( function(daNote:Note){
+				if(daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData])
+					goodNoteHit(daNote);
+			});
+		};
+		if ((upP || rightP || downP || leftP) && generatedMusic)
+			{
+				boyfriend.holdTimer=0;
 				var possibleNotes:Array<Note> = [];
-
-				var ignoreList:Array<Int> = [];
-
-				notes.forEachAlive(function(daNote:Note)
-				{
-					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate)
-					{
-						// the sorting probably doesn't need to be in here? who cares lol
-						possibleNotes.push(daNote);
-						possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-
-						ignoreList.push(daNote.noteData);
-					}
+				var ignoreList = [];
+				var what = [];
+				notes.forEachAlive( function(daNote:Note){
+					if(daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit){
+						if(ignoreList.contains(daNote.noteData)){
+							for(note in possibleNotes){
+								if(note.noteData==daNote.noteData && Math.abs(daNote.strumTime-note.strumTime)<10){
+									what.push(daNote);
+								}else if(note.noteData==daNote.noteData && daNote.strumTime<note.strumTime){
+									possibleNotes.remove(note);
+									possibleNotes.push(daNote);
+								}
+							}
+						}else{
+							possibleNotes.push(daNote);
+							ignoreList.push(daNote.noteData);
+						};
+					};
 				});
 
+				for(bruh in what){
+					bruh.kill();
+					notes.remove(bruh,true);
+					bruh.destroy();
+				};
+				possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
 
-				if (possibleNotes.length > 0)
-				{
-					var daNote = possibleNotes[0];
-
-					// Jump notes
-					if (possibleNotes.length >= 2)
-					{
-						if (possibleNotes[0].strumTime == possibleNotes[1].strumTime)
-						{
-							for (coolNote in possibleNotes)
-							{
-
-								if (controlArray[coolNote.noteData])
-									goodNoteHit(coolNote);
-								else
-								{
-									var inIgnoreList:Bool = false;
-									for (shit in 0...ignoreList.length)
-									{
-										if (controlArray[ignoreList[shit]])
-											inIgnoreList = true;
-									}
-								}
-							}
-						}
-						else if (possibleNotes[0].noteData == possibleNotes[1].noteData)
-						{
-							if (loadRep)
-							{
-
-								if (NearlyEquals(daNote.strumTime,rep.replay.keyPresses[repPresses].time, 30))
-								{
-									goodNoteHit(daNote);
-									trace('force note hit');
-								}
-								else
-									noteCheck(controlArray, daNote);
-							}
-							else
-								noteCheck(controlArray, daNote);
-						}
-						else
-						{
-							for (coolNote in possibleNotes)
-							{
-								if (loadRep)
-									{
-										if (NearlyEquals(coolNote.strumTime,rep.replay.keyPresses[repPresses].time, 30))
-										{
-											goodNoteHit(coolNote);
-											trace('force note hit');
-										}
-										else
-											noteCheck(controlArray, daNote);
-									}
-								else
-									noteCheck(controlArray, coolNote);
-							}
-						}
+				if(perfectMode){
+					goodNoteHit(possibleNotes[0]);
+				}else if(possibleNotes.length>0){
+					for (idx in 0...controlArray.length){
+						var pressed = controlArray[idx];
+						if(pressed && ignoreList.contains(idx)==false )
+							badNoteCheck();
 					}
-					else // regular notes?
-					{
-						if (loadRep)
-						{
-							if (NearlyEquals(daNote.strumTime,rep.replay.keyPresses[repPresses].time, 30))
-							{
-								goodNoteHit(daNote);
-								trace('force note hit');
-							}
-							else
-								noteCheck(controlArray, daNote);
-						}
-						else
-							noteCheck(controlArray, daNote);
-					}
-					if (daNote.wasGoodHit)
-					{
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
+					for (daNote in possibleNotes){
+						if(controlArray[daNote.noteData])
+							goodNoteHit(daNote);
+					};
+				}else{
+					badNoteCheck();
+				};
+
+
+
 				}
-			}
-
-			if ((up || right || down || left) && generatedMusic || (upHold || downHold || leftHold || rightHold) && loadRep && generatedMusic)
-			{
-				notes.forEachAlive(function(daNote:Note)
-				{
-					if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
-					{
-						switch (daNote.noteData)
-						{
-							// NOTES YOU ARE HOLDING
-							case 2:
-								if (up || upHold)
-									goodNoteHit(daNote);
-							case 3:
-								if (right || rightHold)
-									goodNoteHit(daNote);
-							case 1:
-								if (down || downHold)
-									goodNoteHit(daNote);
-							case 0:
-								if (left || leftHold)
-									goodNoteHit(daNote);
-						}
-					}
-				});
-			}
 
 			var bfVar:Float=4;
 			if(boyfriend.curCharacter=='dad')
@@ -3196,45 +3084,12 @@ class PlayState extends MusicBeatState
 
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
-				switch (spr.ID)
-				{
-					case 2:
-						if (upP && spr.animation.curAnim.name != 'confirm')
-						{
-							spr.animation.play('pressed');
-							trace('play');
-						}
-						if (upR)
-						{
-							spr.animation.play('static');
-							repReleases++;
-						}
-					case 3:
-						if (rightP && spr.animation.curAnim.name != 'confirm')
-							spr.animation.play('pressed');
-						if (rightR)
-						{
-							spr.animation.play('static');
-							repReleases++;
-						}
-					case 1:
-						if (downP && spr.animation.curAnim.name != 'confirm')
-							spr.animation.play('pressed');
-						if (downR)
-						{
-							spr.animation.play('static');
-							repReleases++;
-						}
-					case 0:
-						if (leftP && spr.animation.curAnim.name != 'confirm')
-							spr.animation.play('pressed');
-						if (leftR)
-						{
-							spr.animation.play('static');
-							repReleases++;
-						}
-				}
+				if(controlArray[spr.ID] && spr.animation.curAnim.name!="confirm")
+					spr.animation.play("pressed");
 
+				if(!holdArray[spr.ID]){
+					spr.animation.play("static");
+				}
 				if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
 				{
 					spr.centerOffsets();
@@ -3250,7 +3105,11 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			health -= 0.125;
+			if(SONG.song.toLowerCase()=='pain-gran-venta')
+				health -= 0.3;
+			else
+				health -= 0.125;
+
 			if (combo > 5 && gf.animOffsets.exists('sad') && !FlxG.save.data.playOpponent)
 			{
 				gf.playAnim('sad');
@@ -3286,20 +3145,23 @@ class PlayState extends MusicBeatState
 		{
 			// just double pasting this shit cuz fuk u
 			// REDO THIS SYSTEM!
-			/*var upP = controls.UP_P;
-			var rightP = controls.RIGHT_P;
-			var downP = controls.DOWN_P;
-			var leftP = controls.LEFT_P;
+			if(FlxG.save.data.miss){
+				totalPlayed++;
+				var upP = controls.UP_P;
+				var rightP = controls.RIGHT_P;
+				var downP = controls.DOWN_P;
+				var leftP = controls.LEFT_P;
 
-			if (leftP)
-				noteMiss(0);
-			if (upP)
-				noteMiss(2);
-			if (rightP)
-				noteMiss(3);
-			if (downP)
-				noteMiss(1);
-			updateAccuracy();*/
+				if (leftP)
+					noteMiss(0);
+				if (upP)
+					noteMiss(2);
+				if (rightP)
+					noteMiss(3);
+				if (downP)
+					noteMiss(1);
+				updateAccuracy();
+			}
 
 			// TDDO: MAKE LESS SHIT
 		}
@@ -3354,69 +3216,6 @@ class PlayState extends MusicBeatState
 	var mashing:Int = 0;
 	var mashViolations:Int = 0;
 
-	function vanillaNoteCheck(keyP:Bool, note:Note):Void
-	{
-		trace("KEYP " + keyP, note.noteData);
-		if (keyP)
-			goodNoteHit(note);
-		else
-		{
-			trace("WTF");
-			badNoteCheck();
-		}
-	}
-
-	function noteCheck(controlArray:Array<Bool>, note:Note):Void
-	{
-		if(FlxG.save.data.inputSystem=="Vanilla"){
-			vanillaNoteCheck(controlArray[note.noteData],note);
-		}else{
-			kadeNoteCheck(controlArray,note);
-		}
-	}
-	function kadeNoteCheck(controlArray:Array<Bool>, note:Note):Void // sorry lol
-		{
-			if (loadRep)
-			{
-				if (controlArray[note.noteData])
-					goodNoteHit(note);
-				else if (rep.replay.keyPresses.length > repPresses && !controlArray[note.noteData])
-				{
-					if (NearlyEquals(note.strumTime,rep.replay.keyPresses[repPresses].time, 4))
-					{
-						goodNoteHit(note);
-					}
-				}
-			}
-			else if (controlArray[note.noteData])
-				{
-					for (b in controlArray) {
-						if (b)
-							mashing++;
-					}
-
-					// ANTI MASH CODE FOR THE BOYS
-
-					if (mashing <= getKeyPresses(note) && mashViolations < 2)
-					{
-						mashViolations++;
-
-						goodNoteHit(note, (mashing <= getKeyPresses(note)));
-					}
-					else
-					{
-						// this is bad but fuck you
-						playerStrums.members[0].animation.play('static');
-						playerStrums.members[1].animation.play('static');
-						playerStrums.members[2].animation.play('static');
-						playerStrums.members[3].animation.play('static');
-						trace('mash ' + mashing);
-					}
-
-					if (mashing != 0)
-						mashing = 0;
-				}
-		}
 
 
 		function goodNoteHit(note:Note, resetMashViolation = true):Void

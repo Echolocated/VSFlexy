@@ -56,6 +56,21 @@ class TitleState extends MusicBeatState
 			sys.FileSystem.createDirectory(Sys.getCwd() + "/assets/replays");
 		#end
 
+		if(FlxG.save.data.offset==null){
+			FlxG.save.data.offset=0;
+		}
+		if(FlxG.save.data.miss==null){
+			FlxG.save.data.miss=false;
+		}
+		if(FlxG.save.data.accuracyDisplay==null){
+			FlxG.save.data.accuracyDisplay=true;
+		}
+		if(FlxG.save.data.binds==null){
+			FlxG.save.data.binds="WASD";
+		}else if(FlxG.save.data.accuracyDisplay==true){
+			FlxG.save.data.binds="DFJK";
+		}
+
 
 		PlayerSettings.init();
 
@@ -121,9 +136,6 @@ class TitleState extends MusicBeatState
 				new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
 			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
 				{asset: diamond, width: 32, height: 32}, new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
-
-			transIn = FlxTransitionableState.defaultTransIn;
-			transOut = FlxTransitionableState.defaultTransOut;
 
 			// HAD TO MODIFY SOME BACKEND SHIT
 			// IF THIS PR IS HERE IF ITS ACCEPTED UR GOOD TO GO

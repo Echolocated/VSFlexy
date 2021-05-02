@@ -25,9 +25,9 @@ class OptionsMenu extends MusicBeatState
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		var FUCKSHITCUNT:String = (FlxG.save.data.binds==null ? "DFJK" : FlxG.save.data.binds) + "\n" + (FlxG.save.data.newInput ? "New scoring" : "Old scoring") + "\n" + (FlxG.save.data.inputSystem==null ? "Old KadeEngine" : FlxG.save.data.inputSystem) + "\n" + (FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll') + "\nAccuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on") + "\nLoad replays";
+		var FUCKSHITCUNT:String = (FlxG.save.data.binds==null ? "DFJK" : FlxG.save.data.binds) + "\n" + (FlxG.save.data.newInput ? "New scoring" : "Old scoring") + "\n" + (FlxG.save.data.inputSystem==null ? "Old KadeEngine" : FlxG.save.data.inputSystem) + "\n" + (FlxG.save.data.downscroll ? 'Downscroll' : 'Upscroll');
 
-		FUCKSHITCUNT=FUCKSHITCUNT + "\n"+(FlxG.save.data.playOpponent ? "Opponent Mode" : "BF Mode");
+		FUCKSHITCUNT=FUCKSHITCUNT +"\nAccuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on") + "\n"+(FlxG.save.data.playOpponent ? "Opponent Mode" : "BF Mode")+"\nMiss "+(FlxG.save.data.miss ? "when hitting nothing" : "only when notes whiff");
 		controlsStrings = CoolUtil.coolStringFile(FUCKSHITCUNT);
 
 		trace(controlsStrings);
@@ -52,7 +52,7 @@ class OptionsMenu extends MusicBeatState
 		}
 
 
-		versionShit = new FlxText(5, FlxG.height - 18, 0, "Offset (Left, Right): " + FlxG.save.data.offset, 12);
+		versionShit = new FlxText(5, FlxG.height - 18, 0, "Offset (Left, Right): " + (FlxG.save.data.offset==null ? 0 : FlxG.save.data.offset), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -86,8 +86,7 @@ class OptionsMenu extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (curSelected != 5)
-					grpControls.remove(grpControls.members[curSelected]);
+				grpControls.remove(grpControls.members[curSelected]);
 				switch(curSelected)
 				{
 					case 0:
@@ -101,7 +100,7 @@ class OptionsMenu extends MusicBeatState
 							case 'SDKL':
 								FlxG.save.data.binds = 'WASD';
 							default:
-								FlxG.save.data.binds = 'DFJK';
+								FlxG.save.data.binds = 'ASKL';
 						}
 
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, FlxG.save.data.binds, true, false);
@@ -151,11 +150,14 @@ class OptionsMenu extends MusicBeatState
 						ctrl.targetY = curSelected - 4;
 						grpControls.add(ctrl);
 					case 5:
-						trace('switch');
-						FlxG.switchState(new LoadReplayState());
-					case 6:
 						FlxG.save.data.playOpponent = !FlxG.save.data.playOpponent;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.playOpponent ? "Opponent Mode" : "BF Mode"), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 5;
+						grpControls.add(ctrl);
+					case 6:
+						FlxG.save.data.miss = !FlxG.save.data.miss;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, "Miss " + (FlxG.save.data.miss ? "when hitting nothing" : "only when notes whiff"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 6;
 						grpControls.add(ctrl);
