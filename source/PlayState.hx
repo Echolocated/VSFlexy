@@ -2362,7 +2362,6 @@ class PlayState extends MusicBeatState
 					arrowOffset[1] = [ // down
 						beatOffset/2+(15*Math.cos(timer*6)),
 						(Math.cos((timer+1)*freq)*intes),
-						0
 					];
 					arrowOffset[2] = [ // up
 						-beatOffset/2+(15*Math.cos(timer*6)),
