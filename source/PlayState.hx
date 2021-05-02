@@ -2325,13 +2325,13 @@ class PlayState extends MusicBeatState
 					currY = ((Math.cos(timer*2)*2)+FlxG.random.int(-limit,limit))*Lib.application.window.scale;
 					currX = FlxG.random.int(-limit,limit);
 				}else if (curStep<=2751){
-					currY = (Math.cos(timer*2)*36)*Lib.application.window.scale;
-				}else if(curStep<3008){
 					if(fakeTransition!=null){
 						closeSubState();
 						FlxG.camera.flash(FlxColor.WHITE,.25);
 						fakeTransition=null;
 					}
+					currY = (Math.cos(timer*2)*36)*Lib.application.window.scale;
+				}else if(curStep<3008){
 					currY = ((Math.cos(timer*4)*72)+beatOffset/4)*Lib.application.window.scale;
 					currX = (Math.cos(timer*2)*48)*Lib.application.window.scale;
 				}else{
