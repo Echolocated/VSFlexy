@@ -815,6 +815,10 @@ class PlayState extends MusicBeatState
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/background'));
 			bg.antialiasing = true;
 			bg.active = false;
+			bg.setGraphicSize (Std.int(bg.width * .6));
+			bg.screenCenter(XY);
+			bg.y += 100;
+			bg.x += 100;
 			add(bg);
 		default:
 
@@ -980,7 +984,6 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
-
 			case "spooky":
 				dad.y += 200;
 			case "flexy":
@@ -1041,6 +1044,8 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
+			case 'merchant':
+				boyfriend.y += 80;
 			case 'schoolEvil':
 				// trailArea.scrollFactor.set();
 
@@ -2222,6 +2227,8 @@ class PlayState extends MusicBeatState
 						camFollow.y = boyfriend.getMidpoint().y - 175;
 					case 'rooftop':
 						camFollow.x = boyfriend.getMidpoint().x - 250;
+					case 'merchant':
+						camFollow.y = boyfriend.getMidpoint().y - 200;
 				}
 
 				if (SONG.song.toLowerCase() == 'tutorial')
@@ -2845,7 +2852,7 @@ class PlayState extends MusicBeatState
 					totalNotesHit += 1;
 					if (health < 2)
 						if(SONG.song.toLowerCase()=='pain-gran-venta')
-							health += 0.025;
+							health += 0.035;
 						else
 							health += 0.075;
 					sicks++;
@@ -3117,7 +3124,7 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			if(SONG.song.toLowerCase()=='pain-gran-venta')
-				health -= 0.3;
+				health -= 0.2;
 			else
 				health -= 0.125;
 
