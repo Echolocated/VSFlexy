@@ -2290,6 +2290,7 @@ class PlayState extends MusicBeatState
 		beatOffset = FlxMath.lerp(beatOffset,0,.02);
 		if(curSong == "Pain-Gran-Venta"){
 		 	if(curStep==2520 && doneTransShit==false){
+
 					doneTransShit=true;
 					persistentUpdate = true;
 					persistentDraw = true;
@@ -2302,6 +2303,9 @@ class PlayState extends MusicBeatState
 					openSubState(fakeTransition);
 					fakeTransition._effect.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 					fakeTransition.start(IN);
+					fakeTransition.finishCallback= function() {
+						FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+					}
 			}else if(curStep>=2520){
 				var currY:Float = 0;
 				var currX:Float = 0;
