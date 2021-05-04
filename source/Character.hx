@@ -527,6 +527,21 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -10, -80);
 
 				playAnim('idle');
+			case 'merchant':
+				frames = Paths.getSparrowAtlas('Merchant_assets');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up arrow', 24, false);
+				animation.addByPrefix('singDOWN', 'down arrow', 24, false);
+				animation.addByPrefix('singLEFT', 'left arrow', 24, false);				
+				animation.addByPrefix('singRIGHT', 'right arrow', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 44, 10);
+				addOffset("singRIGHT", 0, -33);
+				addOffset("singLEFT", -10, -15);
+				addOffset("singDOWN", 0, -30);
+
+				playAnim('idle');
 		}
 		dance();
 

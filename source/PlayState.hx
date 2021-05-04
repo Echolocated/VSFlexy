@@ -808,7 +808,14 @@ class PlayState extends MusicBeatState
 			overlay.active = false;
 			overlay.cameras = [camHUD];
 			add(overlay);
+		case 'gran-venta'|'pain-gran-venta':
+			defaultCamZoom = 0.8;
+			curStage = 'merchant';
 
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/background'));
+			bg.antialiasing = true;
+			bg.active = false;
+			add(bg);
 		default:
 
 			defaultCamZoom = 0.9;

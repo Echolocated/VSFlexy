@@ -17,3 +17,4 @@ senpai-angry
 spirit
 flexy
 dmp
+merchant
