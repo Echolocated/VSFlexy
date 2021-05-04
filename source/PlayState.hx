@@ -811,6 +811,17 @@ class PlayState extends MusicBeatState
 		case 'gran-venta'|'pain-gran-venta':
 			defaultCamZoom = 0.8;
 			curStage = 'merchant';
+			var sky:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/sky'));
+			sky.antialiasing = true;
+			sky.active = false;
+			sky.setGraphicSize (Std.int(sky.width * 1.2));
+			sky.scrollFactor.set(.2,.2);
+			sky.screenCenter(XY);
+			sky.y -= 100;
+			sky.x -= 200;
+			add(sky);
+
+
 
 			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/background'));
 			bg.antialiasing = true;
@@ -820,6 +831,18 @@ class PlayState extends MusicBeatState
 			bg.y += 100;
 			bg.x += 100;
 			add(bg);
+
+			var fire:FlxSprite = new FlxSprite(0, 0);
+			fire.frames = Paths.getSparrowAtlas('merchant/orangeflame');
+			fire.animation.addByPrefix('fire', "fire", 24);
+			fire.animation.play('fire');
+			fire.antialiasing = true;
+			fire.active = false;
+			fire.setGraphicSize (Std.int(fire.width * .6));
+			fire.screenCenter(XY);
+			fire.x -= 500;
+			fire.y -= 200;
+			add(fire);
 		default:
 
 			defaultCamZoom = 0.9;
@@ -3471,11 +3494,10 @@ class PlayState extends MusicBeatState
 
 			// Dad doesnt interupt his own notes
 			if(!FlxG.save.data.playOpponent){
-				if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
+				if (!dad.animation.curAnim.name.startsWith("sing"))
+				{
 					dad.dance();
-			}else{
-				if (!SONG.notes[Math.floor(curStep / 16)].mustHitSection)
-					dad.dance();
+				}
 			}
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);

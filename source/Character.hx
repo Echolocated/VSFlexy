@@ -268,6 +268,9 @@ class Character extends FlxSprite
 
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('BOYFRIEND');
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
+					tex = Paths.getSparrowAtlas('merchant/ORANGEFRIEND');
+
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -517,7 +520,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('idle', 'flexy idle', 24, false);
 				animation.addByPrefix('singUP', 'flexy up note', 24, false);
 				animation.addByPrefix('singDOWN', 'flexy down note', 24, false);
-				animation.addByPrefix('singLEFT', 'flexy left note', 24, false);				
+				animation.addByPrefix('singLEFT', 'flexy left note', 24, false);
 				animation.addByPrefix('singRIGHT', 'flexy right note', 24, false);
 
 				addOffset('idle');
@@ -528,11 +531,15 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'merchant':
-				frames = Paths.getSparrowAtlas('Merchant_assets');
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
+					frames = Paths.getSparrowAtlas('merchant/wockymerchant');
+				else
+					frames = Paths.getSparrowAtlas('Merchant_assets');
+
 				animation.addByPrefix('idle', 'idle', 24, false);
 				animation.addByPrefix('singUP', 'up arrow', 24, false);
 				animation.addByPrefix('singDOWN', 'down arrow', 24, false);
-				animation.addByPrefix('singLEFT', 'left arrow', 24, false);				
+				animation.addByPrefix('singLEFT', 'left arrow', 24, false);
 				animation.addByPrefix('singRIGHT', 'right arrow', 24, false);
 
 				addOffset('idle');
