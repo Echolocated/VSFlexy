@@ -33,6 +33,8 @@ class Character extends FlxSprite
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
+					tex = Paths.getSparrowAtlas('merchant/orangewhore');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);

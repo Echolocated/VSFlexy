@@ -150,6 +150,8 @@ class PlayState extends MusicBeatState
 	var fastCar:FlxSprite;
 	var songName:FlxText;
 	var upperBoppers:FlxSprite;
+	var fire1:FlxSprite;
+	var fire2:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
 	var bopFellas:FlxSprite;
@@ -822,8 +824,7 @@ class PlayState extends MusicBeatState
 			add(sky);
 
 
-
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/background'));
+			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/backgroundorange'));
 			bg.antialiasing = true;
 			bg.active = false;
 			bg.setGraphicSize (Std.int(bg.width * .6));
@@ -832,17 +833,29 @@ class PlayState extends MusicBeatState
 			bg.x += 100;
 			add(bg);
 
-			var fire:FlxSprite = new FlxSprite(0, 0);
-			fire.frames = Paths.getSparrowAtlas('merchant/orangeflame');
-			fire.animation.addByPrefix('fire', "fire", 24);
-			fire.animation.play('fire');
-			fire.antialiasing = true;
-			fire.active = false;
-			fire.setGraphicSize (Std.int(fire.width * .6));
-			fire.screenCenter(XY);
-			fire.x -= 500;
-			fire.y -= 200;
-			add(fire);
+			fire1 = new FlxSprite(0, 0);
+			fire1.frames = Paths.getSparrowAtlas('merchant/orangeflame');
+			fire1.animation.addByPrefix('fire', "fire", 24);
+			fire1.animation.play('fire');
+			fire1.antialiasing = true;
+			fire1.active = false;
+			fire1.setGraphicSize (Std.int(fire1.width * .6));
+			fire1.screenCenter(XY);
+			fire1.x -= 435;
+			fire1.y -= 105;
+			add(fire1);
+
+			fire2 = new FlxSprite(0, 0);
+			fire2.frames = Paths.getSparrowAtlas('merchant/orangeflame');
+			fire2.animation.addByPrefix('fire', "fire", 24);
+			fire2.animation.play('fire');
+			fire2.antialiasing = true;
+			fire2.active = false;
+			fire2.setGraphicSize (Std.int(fire2.width * .6));
+			fire2.screenCenter(XY);
+			fire2.x += 535;
+			fire2.y -= 105;
+			add(fire2);
 		default:
 
 			defaultCamZoom = 0.9;
@@ -2316,7 +2329,6 @@ class PlayState extends MusicBeatState
 					gfSpeed = 1;
 			}
 		}
-
 		beatOffset = FlxMath.lerp(beatOffset,0,.02);
 		if(curSong == "Pain-Gran-Venta"){
 		 	if(curStep==2520 && doneTransShit==false){
@@ -2362,6 +2374,11 @@ class PlayState extends MusicBeatState
 				if(curStep<2544){
 					currY = ((Math.cos(timer*2)*2))*Lib.application.window.scale;
 				}else if(curStep<2608){
+					/*fire1.frames = Paths.getSparrowAtlas('merchant/purpleflame');
+					fire2.frames = Paths.getSparrowAtlas('merchant/purpleflame');
+					boyfriend.frames = Paths.getSparrowAtlas('merchant/YOUREFUCKED');
+					dad.frames = Paths.getSparrowAtlas('merchant/beathovenmerchant');
+					gf.frames = Paths.getSparrowAtlas('merchant/purplewhore');*/
 					var limit = Std.int(FlxMath.lerp(10,0,(curStep-2545)/64));
 					currY = ((Math.cos(timer*2)*2)+FlxG.random.int(-limit,limit))*Lib.application.window.scale;
 					currX = FlxG.random.int(-limit,limit);
