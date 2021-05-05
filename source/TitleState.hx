@@ -301,32 +301,14 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-
-				// Get current version of Kade Engine
-
-				/*var http = new haxe.Http("https://raw.githubusercontent.com/ash237/furry-stuff/master/version.downloadMe");
-
-				http.onData = function (data:String) {
-
-				  	if (!MainMenuState.engineVer.contains(data.trim()) && !OutdatedSubState.leftState)
-					{
-						trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.engineVer);
-						OutdatedSubState.needVer = data;
-						FlxG.switchState(new OutdatedSubState());
-					}
-					else
-					{
-						FlxG.switchState(new MainMenuState());
-					}
-				}
-
-				http.onError = function (error) {
-				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				}
-
-				http.request();*/
+				if (!RecordingDisclaimerState.leftState)
+			{
+				FlxG.switchState(new RecordingDisclaimerState());
+			}
+			else
+			{
 				FlxG.switchState(new MainMenuState());
+			}
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}

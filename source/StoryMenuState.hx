@@ -423,9 +423,7 @@ class StoryMenuState extends MusicBeatState
 
 		for (i in stringThing)
 		{
-			if(curWeek!=7 || i!='Gran-Venta'){
-				txtTracklist.text += "\n" + i;
-			}
+			txtTracklist.text += "\n" + i;
 		}
 
 		txtTracklist.text = txtTracklist.text.toUpperCase();

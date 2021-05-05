@@ -2369,23 +2369,6 @@ class PlayState extends MusicBeatState
 						(Math.cos((timer+4)*6)*12),
 					];
 				}else if(curStep>=3008){
-					/*
-					arrowOffset[0] = [
-							30-Math.abs((25*Math.cos(timer*6)))+beatOffset,
-							90,
-					];
-					arrowOffset[1] = [
-							90,
-							150+Math.abs((25*Math.cos(timer*6)))-beatOffset,
-					];
-					arrowOffset[2] = [
-							90,
-							30-Math.abs((25*Math.cos(timer*6)))+beatOffset,
-					];
-					arrowOffset[3] = [
-							150+Math.abs((25*Math.cos(timer*6)))-beatOffset,
-							90,
-					];*/
 					var freq=6;
 					var intes=3;
 					arrowOffset[0] = [ // left
@@ -2449,25 +2432,7 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 			FlxG.autoPause=true;
-			if(SONG.song.toLowerCase()=='pain-gran-venta' && isStoryMode){
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					FlxG.autoPause=true;
-					FlxG.switchState(new StoryMenuState());
-
-
-					// if ()
-					StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
-
-					if (SONG.validScore)
-					{
-						NGio.unlockMedal(60961);
-						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
-					}
-
-					FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
-					FlxG.save.flush();
-
-			}else openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 
 
