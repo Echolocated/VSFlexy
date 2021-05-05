@@ -150,6 +150,7 @@ class PlayState extends MusicBeatState
 	var fastCar:FlxSprite;
 	var songName:FlxText;
 	var upperBoppers:FlxSprite;
+	var merchBG:FlxSprite;
 	var fire1:FlxSprite;
 	var fire2:FlxSprite;
 	var bottomBoppers:FlxSprite;
@@ -824,14 +825,14 @@ class PlayState extends MusicBeatState
 			add(sky);
 
 
-			var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/backgroundorange'));
-			bg.antialiasing = true;
-			bg.active = false;
-			bg.setGraphicSize (Std.int(bg.width * .6));
-			bg.screenCenter(XY);
-			bg.y += 100;
-			bg.x += 100;
-			add(bg);
+			merchBG = new FlxSprite(0, 0).loadGraphic(Paths.image('merchant/backgroundorange'));
+			merchBG.antialiasing = true;
+			merchBG.active = false;
+			merchBG.setGraphicSize (Std.int(merchBG.width * .6));
+			merchBG.screenCenter(XY);
+			merchBG.y += 100;
+			merchBG.x += 100;
+			add(merchBG);
 
 			fire1 = new FlxSprite(0, 0);
 			fire1.frames = Paths.getSparrowAtlas('merchant/orangeflame');
@@ -1382,61 +1383,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 	}
-/*
-	function bsIntro(?dialogueBox:DialogueBox):Void
-	{
-		if(SONG.song.toLowerCase()=='saving-face' || SONG.song.toLowerCase()=='parasitic-routine' || SONG.song.toLowerCase()=='personal-space-invasion' ){
-			inCutscene = true;
-			var white:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
-			white.scrollFactor.set();
-			var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-			black.alpha=0;
-			black.scrollFactor.set();
-			add(white);
-			add(black);
-			var bsShit:FlxSprite = new FlxSprite();
-			if(SONG.song.toLowerCase()=='parasitic-routine'){
-				bsShit.frames = Paths.getSparrowAtlas('maskintro');
-				bsShit.animation.addByPrefix('idle', 'intro', 24, false);
-				bsShit.setGraphicSize(Std.int(FlxG.width*1.5),Std.int(FlxG.height*1.5));
-				FlxG.sound.play(Paths.sound('Facefuck'), 1, false, null, true);
-			}else if(SONG.song.toLowerCase()=='saving-face' ){
-				bsShit.frames = Paths.getSparrowAtlas('song1Intro');
-				bsShit.animation.addByPrefix('idle', 'intro', 24, false);
-				FlxG.sound.play(Paths.sound('BruhLemmeWatchDaTeletubbies'), 1, false, null, true);
-			}else if(SONG.song.toLowerCase()=='personal-space-invasion' ){
-				bsShit.frames = Paths.getSparrowAtlas('parasitebreakin');
-				black.alpha=1;
-				white.alpha=0;
-				bsShit.animation.addByPrefix('idle', 'parasiteIntro', 24, false);
-				bsShit.setGraphicSize(Std.int(FlxG.width*1.1),Std.int(FlxG.height*1.1));
-				FlxG.sound.play(Paths.sound('MyMindBitch'), 1, false, null, true);
-			}
 
-			bsShit.scrollFactor.set();
-			bsShit.updateHitbox();
-			bsShit.screenCenter();
-			add(bsShit);
-			bsShit.animation.play('idle');
-
-			bsShit.animation.finishCallback = function(name){
-				FlxG.camera.fade(FlxG.camera.bgColor, .5, false,function(){
-
-					remove(bsShit);
-					remove(black);
-					remove(white);
-					FlxG.camera.fade(FlxG.camera.bgColor, .5, true,function(){
-						bsDialogue(dialogueBox);
-					});
-				});
-			}
-		}else{
-			bsDialogue(dialogueBox);
-		}
-
-
-	}
-*/
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
@@ -2007,6 +1954,7 @@ class PlayState extends MusicBeatState
 	var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 	var fakeTransition:TransitionMod;
 	var doneTransShit = false;
+	var didNebulaCumOnIt=false;
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2372,11 +2320,19 @@ class PlayState extends MusicBeatState
 				if(curStep<2544){
 					currY = ((Math.cos(timer*2)*2))*Lib.application.window.scale;
 				}else if(curStep<2608){
-					/*fire1.frames = Paths.getSparrowAtlas('merchant/purpleflame');
-					fire2.frames = Paths.getSparrowAtlas('merchant/purpleflame');
-					boyfriend.frames = Paths.getSparrowAtlas('merchant/YOUREFUCKED');
-					dad.frames = Paths.getSparrowAtlas('merchant/beathovenmerchant');
-					gf.frames = Paths.getSparrowAtlas('merchant/purplewhore');*/
+					if(didNebulaCumOnIt==false){
+						didNebulaCumOnIt=true;
+						merchBG.loadGraphic(Paths.image('merchant/backgroundpurple'));
+						fire1.frames = Paths.getSparrowAtlas('merchant/purpleflame');
+						fire2.frames = Paths.getSparrowAtlas('merchant/purpleflame');
+						fire1.animation.addByPrefix('idle', "fire0", 24);
+						fire1.animation.play('idle');
+						fire2.animation.addByPrefix('idle', "fire0", 24);
+						fire2.animation.play('idle');
+						boyfriend.animationShit(true);
+						dad.animationShit(true);
+						gf.animationShit(true);
+					}
 					var limit = Std.int(FlxMath.lerp(10,0,(curStep-2545)/64));
 					currY = ((Math.cos(timer*2)*2)+FlxG.random.int(-limit,limit))*Lib.application.window.scale;
 					currX = FlxG.random.int(-limit,limit);

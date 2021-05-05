@@ -17,14 +17,8 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 
-	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
-	{
-		super(x, y);
-
-		animOffsets = new Map<String, Array<Dynamic>>();
-		curCharacter = character;
-		this.isPlayer = isPlayer;
-
+	public function animationShit(?purple:Bool=false){
+		flipX=false;
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
 
@@ -33,8 +27,12 @@ class Character extends FlxSprite
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('GF_assets');
-				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
-					tex = Paths.getSparrowAtlas('merchant/orangewhore');
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta'){
+					if(purple)
+						tex = Paths.getSparrowAtlas('merchant/purplewhore');
+					else
+						tex = Paths.getSparrowAtlas('merchant/orangewhore');
+				}
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -270,8 +268,12 @@ class Character extends FlxSprite
 
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('BOYFRIEND');
-				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
-					tex = Paths.getSparrowAtlas('merchant/ORANGEFRIEND');
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta'){
+					if(purple)
+						tex = Paths.getSparrowAtlas('merchant/YOUREFUCKED');
+					else
+						tex = Paths.getSparrowAtlas('merchant/ORANGEFRIEND');
+				}
 
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -533,10 +535,14 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'merchant':
-				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta')
-					frames = Paths.getSparrowAtlas('merchant/wockymerchant');
-				else
+				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta'){
+					if(purple)
+						frames = Paths.getSparrowAtlas('merchant/beathovenmerchant');
+					else
+						frames = Paths.getSparrowAtlas('merchant/wockymerchant');
+				}else
 					frames = Paths.getSparrowAtlas('Merchant_assets');
+
 
 				animation.addByPrefix('idle', 'idle', 24, false);
 				animation.addByPrefix('singUP', 'up arrow', 24, false);
@@ -575,6 +581,17 @@ class Character extends FlxSprite
 				}
 			}
 		}
+	}
+
+	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
+	{
+		super(x, y);
+
+		animOffsets = new Map<String, Array<Dynamic>>();
+		curCharacter = character;
+		this.isPlayer = isPlayer;
+		animationShit();
+
 	}
 
 	override function update(elapsed:Float)
