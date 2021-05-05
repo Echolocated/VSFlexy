@@ -835,27 +835,25 @@ class PlayState extends MusicBeatState
 
 			fire1 = new FlxSprite(0, 0);
 			fire1.frames = Paths.getSparrowAtlas('merchant/orangeflame');
-			fire1.animation.addByPrefix('fire', "fire", 24);
-			fire1.animation.play('fire');
+			fire1.animation.addByPrefix('idle', "fire0", 24);
 			fire1.antialiasing = true;
-			fire1.active = false;
 			fire1.setGraphicSize (Std.int(fire1.width * .6));
 			fire1.screenCenter(XY);
 			fire1.x -= 435;
 			fire1.y -= 105;
 			add(fire1);
+			fire1.animation.play('idle');
 
 			fire2 = new FlxSprite(0, 0);
 			fire2.frames = Paths.getSparrowAtlas('merchant/orangeflame');
-			fire2.animation.addByPrefix('fire', "fire", 24);
-			fire2.animation.play('fire');
+			fire2.animation.addByPrefix('idle', "fire0", 24);
 			fire2.antialiasing = true;
-			fire2.active = false;
 			fire2.setGraphicSize (Std.int(fire2.width * .6));
 			fire2.screenCenter(XY);
 			fire2.x += 535;
 			fire2.y -= 105;
 			add(fire2);
+			fire2.animation.play('idle');
 		default:
 
 			defaultCamZoom = 0.9;
