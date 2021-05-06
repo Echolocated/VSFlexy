@@ -63,12 +63,12 @@ class Cutscene extends FlxSpriteGroup {
       dialogueBox.finishThing = function(){
         cutsceneSec++;
         if(cutsceneSec==dialogueSections.length){
-          FlxTween.tween(fader, {alpha: 0}, .5, {
+          FlxTween.tween(fader, {alpha: 1}, .5, {
             ease: FlxEase.quadInOut,
             onComplete: function(twn:FlxTween)
             {
               remove(cutsceneImage);
-              FlxTween.tween(fader, {alpha: 1}, .5, {
+              FlxTween.tween(fader, {alpha: 0}, .5, {
                 ease: FlxEase.quadInOut,
                 onComplete: function(twn:FlxTween)
                 {
@@ -86,12 +86,12 @@ class Cutscene extends FlxSpriteGroup {
     }else{
       cutsceneSec++;
       if(cutsceneSec==dialogueSections.length){
-        FlxTween.tween(fader, {alpha: 1}, .5, {
+        FlxTween.tween(fader, {alpha: 0}, .5, {
           ease: FlxEase.quadInOut,
           onComplete: function(twn:FlxTween)
           {
             remove(cutsceneImage);
-            FlxTween.tween(fader, {alpha: 0}, .5, {
+            FlxTween.tween(fader, {alpha: 1}, .5, {
               ease: FlxEase.quadInOut,
               onComplete: function(twn:FlxTween)
               {

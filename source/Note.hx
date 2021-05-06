@@ -25,6 +25,7 @@ class Note extends FlxSprite
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 	public var defaultX:Float = 0;
+	public var isGold:Bool = false;
 
 	public var noteScore:Float = 1;
 
@@ -35,7 +36,7 @@ class Note extends FlxSprite
 	public static var RED_NOTE:Int = 3;
 
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?gold:Bool = false)
 	{
 		super();
 
@@ -51,6 +52,7 @@ class Note extends FlxSprite
 		this.strumTime = strumTime + FlxG.save.data.offset;
 
 		this.noteData = noteData;
+		isGold=gold;
 
 		var daStage:String = PlayState.curStage;
 
@@ -83,26 +85,32 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				if(PlayState.SONG.song.toLowerCase()=='personal-space-invasion'){
-					frames = Paths.getSparrowAtlas('PARASITENOTE_assets');
+				if(gold){
+					frames = Paths.getSparrowAtlas('merchant/Gold_notes');
+
+					animation.addByPrefix('greenScroll', 'green0');
+					animation.addByPrefix('redScroll', 'red0');
+					animation.addByPrefix('blueScroll', 'blue0');
+					animation.addByPrefix('purpleScroll', 'purple0');
+
 				}else{
 					frames = Paths.getSparrowAtlas('NOTE_assets');
+
+					animation.addByPrefix('greenScroll', 'green0');
+					animation.addByPrefix('redScroll', 'red0');
+					animation.addByPrefix('blueScroll', 'blue0');
+					animation.addByPrefix('purpleScroll', 'purple0');
+
+					animation.addByPrefix('purpleholdend', 'pruple end hold');
+					animation.addByPrefix('greenholdend', 'green hold end');
+					animation.addByPrefix('redholdend', 'red hold end');
+					animation.addByPrefix('blueholdend', 'blue hold end');
+
+					animation.addByPrefix('purplehold', 'purple hold piece');
+					animation.addByPrefix('greenhold', 'green hold piece');
+					animation.addByPrefix('redhold', 'red hold piece');
+					animation.addByPrefix('bluehold', 'blue hold piece');
 				}
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
-
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
-
 
 
 				setGraphicSize(Std.int(width * 0.7));

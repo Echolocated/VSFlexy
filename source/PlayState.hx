@@ -144,7 +144,8 @@ class PlayState extends MusicBeatState
 	var phillyCityLights:FlxTypedGroup<FlxSprite>;
 	var phillyTrain:FlxSprite;
 	var trainSound:FlxSound;
-
+	var goldOverlay:FlxSprite;
+	var goldOverlayTween:FlxTween;
 	var limo:FlxSprite;
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:FlxSprite;
@@ -883,6 +884,15 @@ class PlayState extends MusicBeatState
 			add(stageCurtains);
 		}
 
+		goldOverlay = new FlxSprite(0,0).loadGraphic(Paths.image('merchant/Gold_note_overlay'));
+		goldOverlay.setGraphicSize(1280, 720);
+		goldOverlay.antialiasing = true;
+		goldOverlay.alpha = 0;
+		goldOverlay.screenCenter(XY);
+		goldOverlay.active = false;
+		goldOverlay.cameras = [camHUD];
+		add(goldOverlay);
+
 		var gfVersion:String = 'gf';
 
 		switch (curStage)
@@ -1331,8 +1341,6 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'gran-venta' | 'pain-gran-venta':
-					granVentaIntro();
 				default:
 					startCountdown();
 			}
@@ -1669,6 +1677,7 @@ class PlayState extends MusicBeatState
 			{
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
+				var daGold:Bool = songNotes[3];
 
 				var gottaHitNote:Bool = section.mustHitSection;
 
@@ -1686,7 +1695,7 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false,daGold);
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -1699,7 +1708,7 @@ class PlayState extends MusicBeatState
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
+					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daGold);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 
@@ -2519,6 +2528,7 @@ class PlayState extends MusicBeatState
 						{
 							vocals.volume = 0;
 							//if (FlxG.save.data.inputSystem!="Vanilla")
+							if(!daNote.isGold)
 								noteMiss(daNote.noteData);
 						}else if(daNote.isSustainNote && !daNote.wasGoodHit){
 							if(SONG.song.toLowerCase()=='pain-gran-venta')
@@ -2675,7 +2685,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(strumtime:Float, gold:Bool):Void
 		{
 			var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 			// boyfriend.playAnim('hey');
@@ -2726,6 +2736,10 @@ class PlayState extends MusicBeatState
 					daRating = "good";
 				else
 					daRating = "sick";
+			}
+
+			if(gold){
+				daRating = "sick";
 			}
 
 				switch(daRating){
@@ -2791,6 +2805,13 @@ class PlayState extends MusicBeatState
 							health += 0.035;
 						else
 							health += 0.075;
+
+					if (health < 2)
+						if(gold){
+							score = 0;
+							health += .25;
+						}
+
 					sicks++;
 				}
 			};
@@ -3182,8 +3203,9 @@ class PlayState extends MusicBeatState
 				{
 					if (!note.isSustainNote)
 					{
-						combo += 1;
-						popUpScore(note.strumTime);
+						if(note.isGold!=true)
+							combo += 1;
+						popUpScore(note.strumTime,note.isGold==true?true:false);
 						if(combo>highestCombo)
 							highestCombo=combo;
 
@@ -3192,6 +3214,14 @@ class PlayState extends MusicBeatState
 					else{
 						health+=.02;
 						totalNotesHit+=1;
+					}
+
+					if(note.isGold){
+						FlxG.sound.play(Paths.sound('Gold_Note_Hit'), 0.7);
+						goldOverlay.alpha = 1;
+						if(goldOverlayTween!=null)
+							goldOverlayTween.cancel();
+						goldOverlayTween = FlxTween.tween(goldOverlay, {alpha: 0}, .25);
 					}
 					switch (note.noteData)
 					{
