@@ -194,7 +194,7 @@ class PlayState extends MusicBeatState
 
 	public static var timeCurrently:Float = 0;
 	public static var timeCurrentlyR:Float = 0;
-
+	public static var didIntro:Bool = false;
 	override public function create()
 	{
 
@@ -1275,8 +1275,9 @@ class PlayState extends MusicBeatState
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 
-		if (isStoryMode)
+		if (isStoryMode && didIntro==false)
 		{
+			didIntro=true;
 			switch (curSong.toLowerCase())
 			{
 				case "winter-horrorland":
@@ -1316,6 +1317,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'globetrotter':
 					deadmanpenis(doof);
+				case 'gran-venta' | 'pain-gran-venta':
+					granVentaIntro();
 				default:
                     if(doof!=null){
                         showDialogue(doof);
@@ -1328,6 +1331,8 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
+				case 'gran-venta' | 'pain-gran-venta':
+					granVentaIntro();
 				default:
 					startCountdown();
 			}
@@ -1341,6 +1346,12 @@ class PlayState extends MusicBeatState
 		super.create();
 	}
 
+	function granVentaIntro():Void {
+		var cutscene = new Cutscene( CoolUtil.coolTextFile(Paths.txt('gran-venta/cutsceneData')) );
+		cutscene.cameras = [camHUD];
+		add(cutscene);
+		cutscene.finishThing = startCountdown;
+	}
 
 	function deadmanpenis(?d:DialogueBox):Void {
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
@@ -1611,39 +1622,6 @@ class PlayState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
-/*
-		if (FlxG.save.data.songPosition)
-			{
-				remove(songPosBG);
-				remove(songPosBar);
-				remove(songName);
-
-				songPosBG = new FlxSprite(0, strumLine.y - 15).loadGraphic(Paths.image('healthBar'));
-				if (FlxG.save.data.downscroll)
-					songPosBG.y = FlxG.height * 0.9 + 45;
-				songPosBG.screenCenter(X);
-				songPosBG.scrollFactor.set();
-				add(songPosBG);
-
-				if (curStage.contains("school") && FlxG.save.data.downscroll)
-					songPosBG.y -= 45;
-
-				/*songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
-					'songPositionBar', 0, 90000);
-				songPosBar.scrollFactor.set();
-				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
-				add(songPosBar);
-
-				var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20,songPosBG.y,0,SONG.song, 16);
-				if (FlxG.save.data.downscroll)
-					songName.y -= 3;
-				if (!curStage.contains("school"))
-					songName.x -= 15;
-				songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-				songName.scrollFactor.set();
-				add(songName);
-			}
-*/
 		#if desktop
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
@@ -2055,9 +2033,10 @@ class PlayState extends MusicBeatState
 			FlxG.switchState(new Charting()); */
 
 		#if debug
-		if (FlxG.keys.justPressed.EIGHT)
-		FlxG.autoPause=true;
+		if (FlxG.keys.justPressed.EIGHT){
+			FlxG.autoPause=true;
 			FlxG.switchState(new AnimationDebug(SONG.player2));
+		}
 
 		#end
 
@@ -2568,10 +2547,8 @@ class PlayState extends MusicBeatState
 		if (!inCutscene)
 			keyShit();
 
-		#if debug
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
-		#end
 		#if debug
 		if (FlxG.keys.justPressed.TWO && curStage == "rooftop")
 			theFireWorks();
