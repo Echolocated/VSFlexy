@@ -1284,7 +1284,7 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
-
+		
 		if (isStoryMode && didIntro==false)
 		{
 			didIntro=true;
@@ -2571,6 +2571,7 @@ class PlayState extends MusicBeatState
 	}
 	function endSong():Void
 	{
+		didIntro=false;
 		if (!loadRep)
 			rep.SaveReplay();
 
