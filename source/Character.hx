@@ -534,6 +534,35 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -10, -80);
 
 				playAnim('idle');
+			case 'omega-flexy':
+				frames = Paths.getSparrowAtlas('flexy_assets_omega');
+				animation.addByPrefix('idle', 'flexy idle', 24, false);
+				animation.addByPrefix('singUP', 'flexy up note', 24, false);
+				animation.addByPrefix('singDOWN', 'flexy down note', 24, false);
+				animation.addByPrefix('singLEFT', 'flexy left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'flexy right note', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 5, 35);
+				addOffset("singRIGHT", 0, -40);
+				addOffset("singLEFT", -30, -75);
+				addOffset("singDOWN", -10, -80);
+
+				playAnim('idle');
+			case 'omega':
+				frames = Paths.getSparrowAtlas('omega_assets');
+				animation.addByPrefix('idle', 'Omega idle dance', 24, false);
+				animation.addByPrefix('singUP', 'Omega Sing Note UP', 24, false);
+				animation.addByPrefix('singDOWN', 'Omega Sing Note DOWN', 24, false);
+				animation.addByPrefix('singLEFT', 'Omega Sing Note LEFT', 24, false);
+				animation.addByPrefix('singRIGHT', 'Omega Sing Note RIGHT', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 25, 5);
+				addOffset("singRIGHT", 120, 20);
+				addOffset("singLEFT", 140, -75);
+				addOffset("singDOWN", 120, -12);
+				playAnim('idle');
 			case 'merchant':
 				if(PlayState.SONG.song.toLowerCase()=='pain-gran-venta' || PlayState.SONG.song.toLowerCase()=='gran-venta'){
 					if(purple)

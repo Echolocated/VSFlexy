@@ -37,6 +37,7 @@ class HealthIcon extends FlxSprite
 		animation.add('flexy', [24, 25], 0, false, isPlayer);
 		animation.add('dmp', [26, 27], 0, false, isPlayer);
 		animation.add('merchant', [28,29], 0, false, isPlayer);
+		animation.add('omega-flexy', [24,25], 0, false, isPlayer);
 
 		animation.play(char);
 		scrollFactor.set();

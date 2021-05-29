@@ -856,6 +856,32 @@ class PlayState extends MusicBeatState
 			fire2.y -= 105;
 			add(fire2);
 			fire2.animation.play('idle');
+		case 'defender'|'guardian':
+
+			defaultCamZoom = 0.8;
+			curStage = 'stage';
+			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('omega/stageback'));
+			bg.antialiasing = true;
+			bg.scrollFactor.set(0.9, 0.9);
+			bg.active = false;
+			add(bg);
+
+			var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('omega/stagefront'));
+			stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+			stageFront.updateHitbox();
+			stageFront.antialiasing = true;
+			stageFront.scrollFactor.set(0.9, 0.9);
+			stageFront.active = false;
+			add(stageFront);
+
+			var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('omega/stagecurtains'));
+			stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+			stageCurtains.updateHitbox();
+			stageCurtains.antialiasing = true;
+			stageCurtains.scrollFactor.set(1.3, 1.3);
+			stageCurtains.active = false;
+
+			add(stageCurtains);
 		default:
 
 			defaultCamZoom = 0.9;
