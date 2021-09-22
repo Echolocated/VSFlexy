@@ -680,7 +680,7 @@ class PlayState extends MusicBeatState
 			overlay.cameras = [camHUD];
 			add(overlay);
 
-		case 'globetrotter':
+		case 'globetrotter' | 'erect-globetrotter':
 			defaultCamZoom = 0.80;
 			curStage = 'rooftop';
 

@@ -61,9 +61,7 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
 
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
-			addWeek(['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta'], 7, ['flexy', 'flexy', 'dmp', 'merchant']);
-			addWeek(['Defender', 'Guardian'], 8, ['omega']);
-
+			addWeek(['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta', 'Erect-Globetrotter'], 7, ['flexy', 'flexy', 'dmp', 'merchant','dmp']);
 
 		// LOAD MUSIC
 

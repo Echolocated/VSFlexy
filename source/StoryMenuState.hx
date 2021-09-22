@@ -27,8 +27,7 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
-		['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta'],
-		['Defender','Guardian']
+		['Noche', 'Desierto', 'Globetrotter', 'Gran-Venta']
 	];
 	var curDifficulty:Int = 1;
 
